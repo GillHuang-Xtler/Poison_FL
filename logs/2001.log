@@ -1,0 +1,1084 @@
+2020-10-20 15:59:56.664 | DEBUG    | federated_learning.arguments:log:182 - Arguments: 
+Batch Size: 10
+Test Batch Size: 1000
+Epochs: 10
+Learning Rate: 0.01
+Momentum: 0.5
+CUDA Enabled: True
+Shuffle Enabled: False
+Log Interval: 100
+Scheduler Step Size: 50
+Scheduler Gamma: 0.5
+Scheduler Minimum Learning Rate: 1e-10
+Client Selection Strategy: <federated_learning.worker_selection.random.RandomSelectionStrategy object at 0x10518df28>
+Client Selection Strategy Arguments: {
+    "NUM_WORKERS_PER_ROUND": 5,
+    "current_epoch_number": 10
+}
+Model Saving Enabled: False
+Model Saving Interval: 1
+Model Saving Path (Relative): 2001_models
+Epoch Save Start Prefix: start
+Epoch Save End Suffix: end
+Number of Clients: 50
+Number of Poisoned Clients: 5
+NN: <class 'federated_learning.nets.fashion_mnist_cnn.FashionMNISTCNN'>
+Train Data Loader Path: data_loaders/fashion-mnist/train_data_loader.pickle
+Test Data Loader Path: data_loaders/fashion-mnist/test_data_loader.pickle
+Loss Function: <class 'torch.nn.modules.loss.CrossEntropyLoss'>
+Default Model Folder Path: default_models
+Data Path: data
+
+2020-10-20 15:59:56.664 | INFO     | federated_learning.utils.data_loader_utils:load_data_loader_from_file:64 - Loading data loader from file: data_loaders/fashion-mnist/train_data_loader.pickle
+2020-10-20 15:59:57.404 | INFO     | federated_learning.utils.data_loader_utils:load_data_loader_from_file:64 - Loading data loader from file: data_loaders/fashion-mnist/test_data_loader.pickle
+2020-10-20 16:00:00.111 | INFO     | federated_learning.utils.poison_data:poison_data:24 - Poisoning data for workers: [13, 15, 14, 23, 43]
+2020-10-20 16:00:00.117 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #0 has data distribution: [142, 129, 134, 113, 115, 96, 127, 116, 116, 112]
+2020-10-20 16:00:00.119 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #1 has data distribution: [115, 101, 125, 125, 118, 118, 116, 133, 127, 122]
+2020-10-20 16:00:00.120 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #2 has data distribution: [116, 118, 110, 123, 123, 133, 127, 112, 125, 113]
+2020-10-20 16:00:00.122 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #3 has data distribution: [116, 125, 122, 118, 124, 114, 118, 110, 127, 126]
+2020-10-20 16:00:00.123 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #4 has data distribution: [114, 120, 147, 129, 111, 114, 121, 103, 128, 113]
+2020-10-20 16:00:00.124 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #5 has data distribution: [139, 123, 132, 128, 111, 113, 112, 105, 102, 135]
+2020-10-20 16:00:00.125 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #6 has data distribution: [115, 121, 113, 126, 116, 133, 112, 133, 119, 112]
+2020-10-20 16:00:00.126 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #7 has data distribution: [128, 119, 118, 120, 120, 110, 114, 129, 121, 121]
+2020-10-20 16:00:00.127 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #8 has data distribution: [109, 112, 135, 124, 123, 131, 123, 113, 118, 112]
+2020-10-20 16:00:00.128 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #9 has data distribution: [103, 120, 126, 120, 127, 114, 128, 124, 139, 99]
+2020-10-20 16:00:00.130 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #10 has data distribution: [113, 114, 121, 125, 110, 133, 127, 128, 109, 120]
+2020-10-20 16:00:00.131 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #11 has data distribution: [140, 114, 120, 129, 135, 104, 112, 124, 104, 118]
+2020-10-20 16:00:00.132 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #12 has data distribution: [131, 123, 114, 108, 141, 102, 102, 120, 122, 137]
+2020-10-20 16:00:00.133 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #13 has data distribution: [111, 0, 114, 123, 136, 120, 123, 128, 113, 232]
+2020-10-20 16:00:00.134 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #14 has data distribution: [118, 0, 118, 133, 117, 103, 127, 116, 124, 244]
+2020-10-20 16:00:00.135 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #15 has data distribution: [125, 0, 127, 126, 128, 103, 105, 112, 130, 244]
+2020-10-20 16:00:00.136 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #16 has data distribution: [138, 112, 121, 127, 118, 120, 113, 122, 136, 93]
+2020-10-20 16:00:00.137 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #17 has data distribution: [112, 103, 146, 99, 114, 134, 128, 117, 121, 126]
+2020-10-20 16:00:00.139 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #18 has data distribution: [110, 120, 128, 111, 112, 128, 125, 113, 124, 129]
+2020-10-20 16:00:00.140 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #19 has data distribution: [151, 105, 109, 124, 139, 128, 115, 111, 102, 116]
+2020-10-20 16:00:00.141 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #20 has data distribution: [124, 120, 126, 117, 129, 111, 113, 124, 111, 125]
+2020-10-20 16:00:00.142 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #21 has data distribution: [127, 113, 110, 122, 113, 132, 120, 128, 113, 122]
+2020-10-20 16:00:00.143 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #22 has data distribution: [126, 106, 121, 113, 125, 108, 141, 114, 124, 122]
+2020-10-20 16:00:00.144 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #23 has data distribution: [111, 0, 134, 119, 120, 111, 117, 116, 111, 261]
+2020-10-20 16:00:00.145 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #24 has data distribution: [119, 115, 113, 115, 113, 105, 124, 128, 149, 119]
+2020-10-20 16:00:00.146 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #25 has data distribution: [108, 119, 106, 125, 116, 122, 134, 132, 118, 120]
+2020-10-20 16:00:00.147 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #26 has data distribution: [123, 124, 106, 121, 127, 109, 127, 136, 95, 132]
+2020-10-20 16:00:00.148 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #27 has data distribution: [105, 128, 110, 112, 130, 144, 116, 103, 121, 131]
+2020-10-20 16:00:00.149 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #28 has data distribution: [120, 125, 132, 104, 108, 121, 119, 113, 126, 132]
+2020-10-20 16:00:00.150 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #29 has data distribution: [118, 119, 127, 131, 110, 121, 113, 115, 130, 116]
+2020-10-20 16:00:00.151 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #30 has data distribution: [123, 130, 109, 104, 113, 144, 129, 121, 114, 113]
+2020-10-20 16:00:00.152 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #31 has data distribution: [121, 112, 128, 102, 127, 144, 108, 122, 117, 119]
+2020-10-20 16:00:00.154 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #32 has data distribution: [135, 130, 122, 137, 92, 119, 137, 109, 106, 113]
+2020-10-20 16:00:00.155 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #33 has data distribution: [141, 134, 121, 130, 93, 117, 109, 111, 120, 124]
+2020-10-20 16:00:00.156 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #34 has data distribution: [109, 117, 117, 130, 113, 127, 118, 116, 142, 111]
+2020-10-20 16:00:00.157 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #35 has data distribution: [129, 125, 124, 105, 143, 113, 112, 111, 118, 120]
+2020-10-20 16:00:00.159 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #36 has data distribution: [128, 133, 133, 110, 135, 121, 114, 112, 102, 112]
+2020-10-20 16:00:00.159 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #37 has data distribution: [119, 129, 118, 119, 131, 110, 110, 122, 120, 122]
+2020-10-20 16:00:00.161 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #38 has data distribution: [117, 128, 111, 119, 114, 96, 130, 127, 133, 125]
+2020-10-20 16:00:00.162 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #39 has data distribution: [116, 122, 94, 132, 120, 120, 121, 121, 117, 137]
+2020-10-20 16:00:00.163 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #40 has data distribution: [110, 117, 110, 120, 126, 123, 126, 122, 128, 118]
+2020-10-20 16:00:00.164 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #41 has data distribution: [114, 127, 102, 124, 110, 108, 127, 130, 119, 139]
+2020-10-20 16:00:00.165 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #42 has data distribution: [108, 114, 109, 130, 145, 146, 100, 118, 110, 120]
+2020-10-20 16:00:00.166 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #43 has data distribution: [124, 0, 121, 104, 113, 148, 117, 131, 133, 209]
+2020-10-20 16:00:00.167 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #44 has data distribution: [106, 142, 132, 129, 140, 111, 106, 109, 120, 105]
+2020-10-20 16:00:00.168 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #45 has data distribution: [129, 113, 118, 125, 114, 111, 120, 139, 110, 121]
+2020-10-20 16:00:00.169 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #46 has data distribution: [129, 115, 119, 128, 111, 114, 105, 112, 135, 132]
+2020-10-20 16:00:00.170 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #47 has data distribution: [100, 118, 118, 120, 104, 150, 133, 117, 125, 115]
+2020-10-20 16:00:00.172 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #48 has data distribution: [105, 125, 118, 116, 105, 116, 160, 136, 111, 108]
+2020-10-20 16:00:00.173 | INFO     | federated_learning.utils.client_utils:log_client_data_statistics:17 - Client #49 has data distribution: [110, 122, 111, 106, 122, 127, 119, 136, 115, 132]
+2020-10-20 16:00:00.393 | INFO     | server:train_subset_of_clients:38 - Training epoch #1 on client #9
+2020-10-20 16:00:00.416 | INFO     | client:train:139 - [1,     0] loss: 0.028
+2020-10-20 16:00:02.339 | INFO     | client:train:139 - [1,   100] loss: 1.147
+2020-10-20 16:00:02.708 | INFO     | server:train_subset_of_clients:38 - Training epoch #1 on client #41
+2020-10-20 16:00:02.728 | INFO     | client:train:139 - [1,     0] loss: 0.023
+2020-10-20 16:00:04.683 | INFO     | client:train:139 - [1,   100] loss: 1.201
+2020-10-20 16:00:05.046 | INFO     | server:train_subset_of_clients:38 - Training epoch #1 on client #23
+2020-10-20 16:00:05.066 | INFO     | client:train:139 - [1,     0] loss: 0.023
+2020-10-20 16:00:06.994 | INFO     | client:train:139 - [1,   100] loss: 1.169
+2020-10-20 16:00:07.367 | INFO     | server:train_subset_of_clients:38 - Training epoch #1 on client #17
+2020-10-20 16:00:07.387 | INFO     | client:train:139 - [1,     0] loss: 0.029
+2020-10-20 16:00:09.320 | INFO     | client:train:139 - [1,   100] loss: 1.148
+2020-10-20 16:00:09.686 | INFO     | server:train_subset_of_clients:38 - Training epoch #1 on client #39
+2020-10-20 16:00:09.707 | INFO     | client:train:139 - [1,     0] loss: 0.024
+2020-10-20 16:00:11.638 | INFO     | client:train:139 - [1,   100] loss: 1.100
+2020-10-20 16:00:12.001 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:00:12.004 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:00:12.006 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:00:12.007 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:00:12.009 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:00:12.011 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:00:12.012 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:00:12.014 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:00:12.016 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:00:12.018 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:00:12.020 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:00:12.023 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:00:12.024 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:00:12.026 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:00:12.028 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:00:12.030 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:00:12.032 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:00:12.033 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:00:12.035 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:00:12.037 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:00:12.038 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:00:12.040 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:00:12.041 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:00:12.043 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:00:12.044 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:00:12.046 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:00:12.048 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:00:12.049 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:00:12.051 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:00:12.053 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:00:12.054 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:00:12.056 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:00:12.058 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:00:12.059 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:00:12.061 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:00:12.062 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:00:12.064 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:00:12.066 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:00:12.067 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:00:12.069 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:00:12.070 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:00:12.072 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:00:12.074 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:00:12.075 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:00:12.077 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:00:12.079 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:00:12.080 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:00:12.082 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:00:12.084 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:00:12.085 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:00:12.087 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:00:16.045 | DEBUG    | client:test:203 - Test set: Accuracy: 7736/10000 (77%)
+2020-10-20 16:00:16.045 | DEBUG    | client:test:204 - Test set: Loss: 6.346190392971039
+2020-10-20 16:00:16.077 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.77      0.76      0.77      1000
+           1       1.00      0.82      0.90      1000
+           2       0.72      0.63      0.67      1000
+           3       0.63      0.91      0.74      1000
+           4       0.52      0.84      0.64      1000
+           5       0.87      0.92      0.89      1000
+           6       0.69      0.14      0.24      1000
+           7       0.89      0.87      0.88      1000
+           8       0.93      0.91      0.92      1000
+           9       0.91      0.94      0.92      1000
+
+    accuracy                           0.77     10000
+   macro avg       0.79      0.77      0.76     10000
+weighted avg       0.79      0.77      0.76     10000
+
+2020-10-20 16:00:16.078 | DEBUG    | client:test:206 - Confusion Matrix:
+[[759   0  22 145  22  13  21   0  18   0]
+ [  3 820   8 147  19   1   0   0   2   0]
+ [  9   0 627  21 303  10  20   0  10   0]
+ [ 13   0   7 912  48   6  13   0   1   0]
+ [  1   0  76  64 840   6   8   0   5   0]
+ [  0   0   0   3   0 919   0  49   2  27]
+ [195   0 131 125 359  17 142   0  29   2]
+ [  0   0   0   0   0  65   0 872   0  63]
+ [  1   0   5  40  14  19   3   7 908   3]
+ [  0   0   0   1   0   5   0  56   1 937]]
+2020-10-20 16:00:16.079 | DEBUG    | client:test:207 - Class precision: [0.77370031 1.         0.71575342 0.6255144  0.52336449 0.866164
+ 0.68599034 0.88617886 0.93032787 0.90794574]
+2020-10-20 16:00:16.080 | DEBUG    | client:test:208 - Class recall: [0.759 0.82  0.627 0.912 0.84  0.919 0.142 0.872 0.908 0.937]
+2020-10-20 16:00:16.082 | INFO     | server:train_subset_of_clients:38 - Training epoch #2 on client #31
+2020-10-20 16:00:16.110 | INFO     | client:train:139 - [2,     0] loss: 0.007
+2020-10-20 16:00:18.048 | INFO     | client:train:139 - [2,   100] loss: 0.689
+2020-10-20 16:00:18.415 | INFO     | server:train_subset_of_clients:38 - Training epoch #2 on client #36
+2020-10-20 16:00:18.437 | INFO     | client:train:139 - [2,     0] loss: 0.006
+2020-10-20 16:00:20.367 | INFO     | client:train:139 - [2,   100] loss: 0.721
+2020-10-20 16:00:20.733 | INFO     | server:train_subset_of_clients:38 - Training epoch #2 on client #48
+2020-10-20 16:00:20.756 | INFO     | client:train:139 - [2,     0] loss: 0.003
+2020-10-20 16:00:22.676 | INFO     | client:train:139 - [2,   100] loss: 0.786
+2020-10-20 16:00:23.046 | INFO     | server:train_subset_of_clients:38 - Training epoch #2 on client #25
+2020-10-20 16:00:23.065 | INFO     | client:train:139 - [2,     0] loss: 0.005
+2020-10-20 16:00:25.003 | INFO     | client:train:139 - [2,   100] loss: 0.720
+2020-10-20 16:00:25.366 | INFO     | server:train_subset_of_clients:38 - Training epoch #2 on client #3
+2020-10-20 16:00:25.386 | INFO     | client:train:139 - [2,     0] loss: 0.003
+2020-10-20 16:00:27.310 | INFO     | client:train:139 - [2,   100] loss: 0.671
+2020-10-20 16:00:27.673 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:00:27.676 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:00:27.678 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:00:27.679 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:00:27.681 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:00:27.683 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:00:27.684 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:00:27.686 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:00:27.687 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:00:27.689 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:00:27.691 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:00:27.692 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:00:27.694 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:00:27.695 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:00:27.697 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:00:27.699 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:00:27.700 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:00:27.702 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:00:27.703 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:00:27.705 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:00:27.707 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:00:27.708 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:00:27.710 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:00:27.712 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:00:27.713 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:00:27.715 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:00:27.716 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:00:27.718 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:00:27.719 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:00:27.721 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:00:27.723 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:00:27.724 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:00:27.726 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:00:27.727 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:00:27.729 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:00:27.731 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:00:27.732 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:00:27.734 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:00:27.736 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:00:27.737 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:00:27.739 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:00:27.740 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:00:27.742 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:00:27.743 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:00:27.745 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:00:27.747 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:00:27.748 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:00:27.750 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:00:27.751 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:00:27.753 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:00:27.755 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:00:31.530 | DEBUG    | client:test:203 - Test set: Accuracy: 8225/10000 (82%)
+2020-10-20 16:00:31.530 | DEBUG    | client:test:204 - Test set: Loss: 5.024286091327667
+2020-10-20 16:00:31.559 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.79      0.79      0.79      1000
+           1       0.98      0.93      0.96      1000
+           2       0.76      0.67      0.71      1000
+           3       0.72      0.91      0.80      1000
+           4       0.64      0.82      0.72      1000
+           5       0.94      0.91      0.93      1000
+           6       0.66      0.38      0.48      1000
+           7       0.88      0.93      0.91      1000
+           8       0.93      0.95      0.94      1000
+           9       0.94      0.93      0.93      1000
+
+    accuracy                           0.82     10000
+   macro avg       0.82      0.82      0.82     10000
+weighted avg       0.82      0.82      0.82     10000
+
+2020-10-20 16:00:31.560 | DEBUG    | client:test:206 - Confusion Matrix:
+[[786   1  19 106   7   8  52   0  21   0]
+ [  0 932   5  51   8   0   2   0   2   0]
+ [ 11   0 667  23 226   3  58   0  12   0]
+ [ 15  10   6 914  22   1  30   0   2   0]
+ [  1   1  59  67 825   1  41   0   5   0]
+ [  0   0   0   4   0 914   0  58   5  19]
+ [187   1 120  92 191   6 375   0  27   1]
+ [  0   0   0   0   0  26   0 933   1  40]
+ [  1   1   7  14   7   9   6   4 948   3]
+ [  0   1   0   1   0   4   2  60   1 931]]
+2020-10-20 16:00:31.561 | DEBUG    | client:test:207 - Class precision: [0.78521479 0.98416051 0.75537939 0.71855346 0.64152411 0.94032922
+ 0.66254417 0.88436019 0.92578125 0.93661972]
+2020-10-20 16:00:31.561 | DEBUG    | client:test:208 - Class recall: [0.786 0.932 0.667 0.914 0.825 0.914 0.375 0.933 0.948 0.931]
+2020-10-20 16:00:31.564 | INFO     | server:train_subset_of_clients:38 - Training epoch #3 on client #29
+2020-10-20 16:00:31.592 | INFO     | client:train:139 - [3,     0] loss: 0.002
+2020-10-20 16:00:33.510 | INFO     | client:train:139 - [3,   100] loss: 0.608
+2020-10-20 16:00:33.877 | INFO     | server:train_subset_of_clients:38 - Training epoch #3 on client #14
+2020-10-20 16:00:33.896 | INFO     | client:train:139 - [3,     0] loss: 0.004
+2020-10-20 16:00:35.805 | INFO     | client:train:139 - [3,   100] loss: 0.650
+2020-10-20 16:00:36.176 | INFO     | server:train_subset_of_clients:38 - Training epoch #3 on client #3
+2020-10-20 16:00:36.196 | INFO     | client:train:139 - [3,     0] loss: 0.013
+2020-10-20 16:00:38.101 | INFO     | client:train:139 - [3,   100] loss: 0.531
+2020-10-20 16:00:38.465 | INFO     | server:train_subset_of_clients:38 - Training epoch #3 on client #5
+2020-10-20 16:00:38.484 | INFO     | client:train:139 - [3,     0] loss: 0.003
+2020-10-20 16:00:40.401 | INFO     | client:train:139 - [3,   100] loss: 0.612
+2020-10-20 16:00:40.764 | INFO     | server:train_subset_of_clients:38 - Training epoch #3 on client #26
+2020-10-20 16:00:40.783 | INFO     | client:train:139 - [3,     0] loss: 0.003
+2020-10-20 16:00:42.693 | INFO     | client:train:139 - [3,   100] loss: 0.604
+2020-10-20 16:00:43.056 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:00:43.059 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:00:43.061 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:00:43.062 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:00:43.064 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:00:43.066 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:00:43.067 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:00:43.069 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:00:43.070 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:00:43.072 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:00:43.074 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:00:43.075 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:00:43.077 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:00:43.078 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:00:43.080 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:00:43.082 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:00:43.083 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:00:43.085 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:00:43.087 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:00:43.088 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:00:43.090 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:00:43.091 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:00:43.093 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:00:43.095 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:00:43.096 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:00:43.098 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:00:43.100 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:00:43.101 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:00:43.103 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:00:43.104 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:00:43.106 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:00:43.108 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:00:43.109 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:00:43.111 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:00:43.113 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:00:43.114 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:00:43.116 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:00:43.117 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:00:43.119 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:00:43.121 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:00:43.122 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:00:43.124 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:00:43.125 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:00:43.127 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:00:43.129 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:00:43.130 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:00:43.132 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:00:43.133 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:00:43.135 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:00:43.137 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:00:43.138 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:00:46.847 | DEBUG    | client:test:203 - Test set: Accuracy: 8300/10000 (83%)
+2020-10-20 16:00:46.848 | DEBUG    | client:test:204 - Test set: Loss: 4.666621714830399
+2020-10-20 16:00:46.876 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.79      0.79      0.79      1000
+           1       0.99      0.92      0.96      1000
+           2       0.69      0.81      0.74      1000
+           3       0.73      0.93      0.82      1000
+           4       0.76      0.68      0.72      1000
+           5       0.91      0.94      0.92      1000
+           6       0.67      0.46      0.54      1000
+           7       0.93      0.85      0.89      1000
+           8       0.94      0.94      0.94      1000
+           9       0.89      0.97      0.93      1000
+
+    accuracy                           0.83     10000
+   macro avg       0.83      0.83      0.83     10000
+weighted avg       0.83      0.83      0.83     10000
+
+2020-10-20 16:00:46.878 | DEBUG    | client:test:206 - Confusion Matrix:
+[[794   0  29  96   5   9  50   0  17   0]
+ [  0 924   6  60   4   1   3   0   2   0]
+ [  8   0 811  18  94   3  60   0   6   0]
+ [  9   5  16 927  16   1  24   0   2   0]
+ [  1   0 158  70 681   2  83   0   5   0]
+ [  0   0   0   3   0 936   0  36   2  23]
+ [188   1 153  82  88   8 460   0  19   1]
+ [  0   0   0   0   0  54   0 855   1  90]
+ [  2   1   9  15   4   9   9   4 945   2]
+ [  0   0   0   0   0   7   2  23   1 967]]
+2020-10-20 16:00:46.879 | DEBUG    | client:test:207 - Class precision: [0.79241517 0.9924812  0.68612521 0.72934697 0.76345291 0.90873786
+ 0.66570188 0.93137255 0.945      0.89289012]
+2020-10-20 16:00:46.880 | DEBUG    | client:test:208 - Class recall: [0.794 0.924 0.811 0.927 0.681 0.936 0.46  0.855 0.945 0.967]
+2020-10-20 16:00:46.882 | INFO     | server:train_subset_of_clients:38 - Training epoch #4 on client #43
+2020-10-20 16:00:46.911 | INFO     | client:train:139 - [4,     0] loss: 0.009
+2020-10-20 16:00:48.846 | INFO     | client:train:139 - [4,   100] loss: 0.527
+2020-10-20 16:00:49.209 | INFO     | server:train_subset_of_clients:38 - Training epoch #4 on client #21
+2020-10-20 16:00:49.229 | INFO     | client:train:139 - [4,     0] loss: 0.005
+2020-10-20 16:00:51.141 | INFO     | client:train:139 - [4,   100] loss: 0.543
+2020-10-20 16:00:51.505 | INFO     | server:train_subset_of_clients:38 - Training epoch #4 on client #35
+2020-10-20 16:00:51.525 | INFO     | client:train:139 - [4,     0] loss: 0.004
+2020-10-20 16:00:53.452 | INFO     | client:train:139 - [4,   100] loss: 0.615
+2020-10-20 16:00:53.816 | INFO     | server:train_subset_of_clients:38 - Training epoch #4 on client #45
+2020-10-20 16:00:53.836 | INFO     | client:train:139 - [4,     0] loss: 0.004
+2020-10-20 16:00:55.749 | INFO     | client:train:139 - [4,   100] loss: 0.531
+2020-10-20 16:00:56.113 | INFO     | server:train_subset_of_clients:38 - Training epoch #4 on client #36
+2020-10-20 16:00:56.133 | INFO     | client:train:139 - [4,     0] loss: 0.005
+2020-10-20 16:00:58.040 | INFO     | client:train:139 - [4,   100] loss: 0.553
+2020-10-20 16:00:58.401 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:00:58.404 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:00:58.406 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:00:58.407 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:00:58.409 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:00:58.411 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:00:58.412 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:00:58.414 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:00:58.416 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:00:58.417 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:00:58.419 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:00:58.421 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:00:58.422 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:00:58.424 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:00:58.425 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:00:58.427 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:00:58.429 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:00:58.430 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:00:58.432 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:00:58.434 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:00:58.436 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:00:58.437 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:00:58.439 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:00:58.440 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:00:58.442 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:00:58.444 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:00:58.445 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:00:58.447 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:00:58.449 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:00:58.450 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:00:58.452 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:00:58.453 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:00:58.455 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:00:58.456 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:00:58.458 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:00:58.460 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:00:58.461 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:00:58.463 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:00:58.464 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:00:58.466 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:00:58.468 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:00:58.469 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:00:58.471 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:00:58.473 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:00:58.474 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:00:58.476 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:00:58.477 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:00:58.479 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:00:58.481 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:00:58.482 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:00:58.484 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:01:02.226 | DEBUG    | client:test:203 - Test set: Accuracy: 8455/10000 (85%)
+2020-10-20 16:01:02.227 | DEBUG    | client:test:204 - Test set: Loss: 4.425907373428345
+2020-10-20 16:01:02.258 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.79      0.82      0.80      1000
+           1       1.00      0.90      0.95      1000
+           2       0.72      0.80      0.76      1000
+           3       0.78      0.90      0.83      1000
+           4       0.77      0.74      0.75      1000
+           5       0.95      0.93      0.94      1000
+           6       0.65      0.54      0.59      1000
+           7       0.90      0.94      0.92      1000
+           8       0.95      0.95      0.95      1000
+           9       0.95      0.94      0.94      1000
+
+    accuracy                           0.85     10000
+   macro avg       0.85      0.85      0.84     10000
+weighted avg       0.85      0.85      0.84     10000
+
+2020-10-20 16:01:02.259 | DEBUG    | client:test:206 - Confusion Matrix:
+[[816   0  22  72   5   7  65   0  13   0]
+ [  1 897  10  78   5   0   7   0   2   0]
+ [  8   0 799  11  99   3  73   0   7   0]
+ [ 16   0  14 900  33   0  34   0   3   0]
+ [  1   0 126  42 741   0  86   0   4   0]
+ [  1   0   0   3   0 934   0  47   2  13]
+ [190   0 126  45  78   4 539   0  17   1]
+ [  0   0   0   0   0  24   0 936   1  39]
+ [  2   1   6   9   2   3  18   4 954   1]
+ [  0   0   0   0   0   5   2  53   1 939]]
+2020-10-20 16:01:02.260 | DEBUG    | client:test:207 - Class precision: [0.7884058  0.99888641 0.72438803 0.77586207 0.7694704  0.95306122
+ 0.65412621 0.9        0.9501992  0.94561934]
+2020-10-20 16:01:02.261 | DEBUG    | client:test:208 - Class recall: [0.816 0.897 0.799 0.9   0.741 0.934 0.539 0.936 0.954 0.939]
+2020-10-20 16:01:02.263 | INFO     | server:train_subset_of_clients:38 - Training epoch #5 on client #26
+2020-10-20 16:01:02.292 | INFO     | client:train:139 - [5,     0] loss: 0.005
+2020-10-20 16:01:04.212 | INFO     | client:train:139 - [5,   100] loss: 0.506
+2020-10-20 16:01:04.574 | INFO     | server:train_subset_of_clients:38 - Training epoch #5 on client #0
+2020-10-20 16:01:04.594 | INFO     | client:train:139 - [5,     0] loss: 0.008
+2020-10-20 16:01:06.513 | INFO     | client:train:139 - [5,   100] loss: 0.562
+2020-10-20 16:01:06.881 | INFO     | server:train_subset_of_clients:38 - Training epoch #5 on client #36
+2020-10-20 16:01:06.902 | INFO     | client:train:139 - [5,     0] loss: 0.003
+2020-10-20 16:01:08.830 | INFO     | client:train:139 - [5,   100] loss: 0.486
+2020-10-20 16:01:09.202 | INFO     | server:train_subset_of_clients:38 - Training epoch #5 on client #23
+2020-10-20 16:01:09.221 | INFO     | client:train:139 - [5,     0] loss: 0.012
+2020-10-20 16:01:11.132 | INFO     | client:train:139 - [5,   100] loss: 0.539
+2020-10-20 16:01:11.496 | INFO     | server:train_subset_of_clients:38 - Training epoch #5 on client #15
+2020-10-20 16:01:11.516 | INFO     | client:train:139 - [5,     0] loss: 0.026
+2020-10-20 16:01:13.425 | INFO     | client:train:139 - [5,   100] loss: 0.477
+2020-10-20 16:01:13.792 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:01:13.794 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:01:13.796 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:01:13.798 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:01:13.799 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:01:13.801 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:01:13.802 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:01:13.804 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:01:13.806 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:01:13.807 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:01:13.809 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:01:13.810 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:01:13.812 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:01:13.814 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:01:13.817 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:01:13.818 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:01:13.820 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:01:13.822 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:01:13.823 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:01:13.825 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:01:13.826 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:01:13.828 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:01:13.829 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:01:13.831 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:01:13.833 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:01:13.834 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:01:13.836 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:01:13.838 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:01:13.839 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:01:13.841 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:01:13.843 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:01:13.844 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:01:13.846 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:01:13.848 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:01:13.849 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:01:13.851 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:01:13.852 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:01:13.854 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:01:13.856 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:01:13.857 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:01:13.859 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:01:13.860 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:01:13.862 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:01:13.863 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:01:13.865 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:01:13.867 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:01:13.868 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:01:13.870 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:01:13.872 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:01:13.873 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:01:13.875 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:01:17.779 | DEBUG    | client:test:203 - Test set: Accuracy: 8421/10000 (84%)
+2020-10-20 16:01:17.779 | DEBUG    | client:test:204 - Test set: Loss: 4.665938019752502
+2020-10-20 16:01:17.808 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.83      0.77      0.80      1000
+           1       1.00      0.86      0.92      1000
+           2       0.77      0.78      0.78      1000
+           3       0.71      0.93      0.81      1000
+           4       0.71      0.83      0.77      1000
+           5       0.92      0.95      0.93      1000
+           6       0.71      0.50      0.59      1000
+           7       0.93      0.90      0.91      1000
+           8       0.94      0.95      0.94      1000
+           9       0.93      0.96      0.94      1000
+
+    accuracy                           0.84     10000
+   macro avg       0.85      0.84      0.84     10000
+weighted avg       0.85      0.84      0.84     10000
+
+2020-10-20 16:01:17.809 | DEBUG    | client:test:206 - Confusion Matrix:
+[[765   0  16 104   8   9  78   0  20   0]
+ [  0 860   9 112   8   1   5   0   2   3]
+ [  7   0 777  16 136   3  54   0   7   0]
+ [  5   0  11 934  30   0  18   0   2   0]
+ [  1   0  79  51 828   1  36   0   4   0]
+ [  0   0   0   3   0 951   0  29   2  15]
+ [141   0 108  76 145   6 499   0  25   0]
+ [  0   0   0   0   0  51   0 897   1  51]
+ [  0   0   5  17   5   6   9   4 953   1]
+ [  0   0   0   0   0   8   1  33   1 957]]
+2020-10-20 16:01:17.810 | DEBUG    | client:test:207 - Class precision: [0.83242655 1.         0.77313433 0.71134806 0.7137931  0.91795367
+ 0.71285714 0.93146417 0.93706981 0.93184031]
+2020-10-20 16:01:17.811 | DEBUG    | client:test:208 - Class recall: [0.765 0.86  0.777 0.934 0.828 0.951 0.499 0.897 0.953 0.957]
+2020-10-20 16:01:17.814 | INFO     | server:train_subset_of_clients:38 - Training epoch #6 on client #20
+2020-10-20 16:01:17.843 | INFO     | client:train:139 - [6,     0] loss: 0.003
+2020-10-20 16:01:19.758 | INFO     | client:train:139 - [6,   100] loss: 0.491
+2020-10-20 16:01:20.119 | INFO     | server:train_subset_of_clients:38 - Training epoch #6 on client #16
+2020-10-20 16:01:20.139 | INFO     | client:train:139 - [6,     0] loss: 0.010
+2020-10-20 16:01:22.044 | INFO     | client:train:139 - [6,   100] loss: 0.500
+2020-10-20 16:01:22.405 | INFO     | server:train_subset_of_clients:38 - Training epoch #6 on client #4
+2020-10-20 16:01:22.425 | INFO     | client:train:139 - [6,     0] loss: 0.006
+2020-10-20 16:01:24.341 | INFO     | client:train:139 - [6,   100] loss: 0.486
+2020-10-20 16:01:24.703 | INFO     | server:train_subset_of_clients:38 - Training epoch #6 on client #36
+2020-10-20 16:01:24.723 | INFO     | client:train:139 - [6,     0] loss: 0.002
+2020-10-20 16:01:26.649 | INFO     | client:train:139 - [6,   100] loss: 0.484
+2020-10-20 16:01:27.012 | INFO     | server:train_subset_of_clients:38 - Training epoch #6 on client #45
+2020-10-20 16:01:27.033 | INFO     | client:train:139 - [6,     0] loss: 0.010
+2020-10-20 16:01:28.935 | INFO     | client:train:139 - [6,   100] loss: 0.466
+2020-10-20 16:01:29.296 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:01:29.298 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:01:29.300 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:01:29.301 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:01:29.303 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:01:29.305 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:01:29.306 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:01:29.308 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:01:29.309 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:01:29.311 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:01:29.312 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:01:29.314 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:01:29.316 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:01:29.318 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:01:29.319 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:01:29.321 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:01:29.322 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:01:29.324 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:01:29.326 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:01:29.327 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:01:29.329 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:01:29.331 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:01:29.332 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:01:29.334 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:01:29.336 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:01:29.339 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:01:29.341 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:01:29.342 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:01:29.344 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:01:29.345 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:01:29.347 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:01:29.349 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:01:29.350 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:01:29.352 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:01:29.354 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:01:29.355 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:01:29.357 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:01:29.358 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:01:29.360 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:01:29.361 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:01:29.363 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:01:29.365 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:01:29.366 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:01:29.368 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:01:29.369 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:01:29.371 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:01:29.373 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:01:29.374 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:01:29.376 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:01:29.377 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:01:29.379 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:01:33.158 | DEBUG    | client:test:203 - Test set: Accuracy: 8584/10000 (86%)
+2020-10-20 16:01:33.159 | DEBUG    | client:test:204 - Test set: Loss: 4.01701882481575
+2020-10-20 16:01:33.188 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.80      0.82      0.81      1000
+           1       0.99      0.95      0.97      1000
+           2       0.76      0.81      0.78      1000
+           3       0.78      0.92      0.85      1000
+           4       0.75      0.81      0.78      1000
+           5       0.97      0.93      0.95      1000
+           6       0.72      0.51      0.60      1000
+           7       0.92      0.93      0.92      1000
+           8       0.96      0.95      0.96      1000
+           9       0.92      0.96      0.94      1000
+
+    accuracy                           0.86     10000
+   macro avg       0.86      0.86      0.86     10000
+weighted avg       0.86      0.86      0.86     10000
+
+2020-10-20 16:01:33.189 | DEBUG    | client:test:206 - Confusion Matrix:
+[[821   0  19  75   4   5  66   0  10   0]
+ [  0 949   6  36   4   0   3   0   2   0]
+ [ 14   0 809  14 111   1  46   0   5   0]
+ [ 15   5  14 917  19   0  29   0   1   0]
+ [  1   2  89  57 806   1  42   0   2   0]
+ [  0   0   0   3   0 928   0  46   2  21]
+ [171   1 121  55 124   1 512   0  14   1]
+ [  0   0   0   0   0  15   0 927   1  57]
+ [  4   2   9  13   3   3   9   4 951   2]
+ [  0   0   0   0   0   3   1  31   1 964]]
+2020-10-20 16:01:33.190 | DEBUG    | client:test:207 - Class precision: [0.80019493 0.98957247 0.75820056 0.78376068 0.75256769 0.96969697
+ 0.72316384 0.91964286 0.96157735 0.92248804]
+2020-10-20 16:01:33.190 | DEBUG    | client:test:208 - Class recall: [0.821 0.949 0.809 0.917 0.806 0.928 0.512 0.927 0.951 0.964]
+2020-10-20 16:01:33.192 | INFO     | server:train_subset_of_clients:38 - Training epoch #7 on client #21
+2020-10-20 16:01:33.222 | INFO     | client:train:139 - [7,     0] loss: 0.002
+2020-10-20 16:01:35.149 | INFO     | client:train:139 - [7,   100] loss: 0.487
+2020-10-20 16:01:35.513 | INFO     | server:train_subset_of_clients:38 - Training epoch #7 on client #10
+2020-10-20 16:01:35.534 | INFO     | client:train:139 - [7,     0] loss: 0.005
+2020-10-20 16:01:37.443 | INFO     | client:train:139 - [7,   100] loss: 0.467
+2020-10-20 16:01:37.805 | INFO     | server:train_subset_of_clients:38 - Training epoch #7 on client #20
+2020-10-20 16:01:37.825 | INFO     | client:train:139 - [7,     0] loss: 0.003
+2020-10-20 16:01:39.742 | INFO     | client:train:139 - [7,   100] loss: 0.444
+2020-10-20 16:01:40.103 | INFO     | server:train_subset_of_clients:38 - Training epoch #7 on client #41
+2020-10-20 16:01:40.122 | INFO     | client:train:139 - [7,     0] loss: 0.001
+2020-10-20 16:01:42.038 | INFO     | client:train:139 - [7,   100] loss: 0.532
+2020-10-20 16:01:42.400 | INFO     | server:train_subset_of_clients:38 - Training epoch #7 on client #49
+2020-10-20 16:01:42.420 | INFO     | client:train:139 - [7,     0] loss: 0.004
+2020-10-20 16:01:44.323 | INFO     | client:train:139 - [7,   100] loss: 0.542
+2020-10-20 16:01:44.686 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:01:44.688 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:01:44.690 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:01:44.692 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:01:44.693 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:01:44.695 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:01:44.697 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:01:44.698 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:01:44.700 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:01:44.701 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:01:44.703 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:01:44.705 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:01:44.706 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:01:44.708 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:01:44.709 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:01:44.711 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:01:44.713 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:01:44.714 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:01:44.716 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:01:44.718 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:01:44.719 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:01:44.721 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:01:44.723 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:01:44.724 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:01:44.726 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:01:44.728 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:01:44.729 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:01:44.731 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:01:44.732 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:01:44.734 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:01:44.736 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:01:44.737 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:01:44.739 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:01:44.741 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:01:44.742 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:01:44.744 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:01:44.745 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:01:44.747 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:01:44.749 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:01:44.750 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:01:44.752 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:01:44.753 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:01:44.755 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:01:44.757 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:01:44.758 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:01:44.760 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:01:44.762 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:01:44.763 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:01:44.765 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:01:44.767 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:01:44.768 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:01:48.505 | DEBUG    | client:test:203 - Test set: Accuracy: 8600/10000 (86%)
+2020-10-20 16:01:48.505 | DEBUG    | client:test:204 - Test set: Loss: 3.931160420179367
+2020-10-20 16:01:48.533 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.74      0.88      0.80      1000
+           1       0.99      0.95      0.97      1000
+           2       0.77      0.81      0.79      1000
+           3       0.82      0.90      0.86      1000
+           4       0.77      0.80      0.78      1000
+           5       0.97      0.94      0.95      1000
+           6       0.72      0.47      0.57      1000
+           7       0.90      0.95      0.93      1000
+           8       0.96      0.96      0.96      1000
+           9       0.95      0.94      0.95      1000
+
+    accuracy                           0.86     10000
+   macro avg       0.86      0.86      0.86     10000
+weighted avg       0.86      0.86      0.86     10000
+
+2020-10-20 16:01:48.535 | DEBUG    | client:test:206 - Confusion Matrix:
+[[878   1  16  45   2   5  42   0  11   0]
+ [  2 948   6  35   3   0   4   0   2   0]
+ [ 21   0 811  12 100   1  48   0   7   0]
+ [ 29   7  11 904  20   0  28   0   1   0]
+ [  1   2  94  58 795   0  47   0   3   0]
+ [  1   0   0   3   0 935   0  44   1  16]
+ [247   1 110  37 113   1 475   0  16   0]
+ [  0   0   0   0   0  14   0 955   1  30]
+ [  3   1   3  13   3   4  12   5 956   0]
+ [  0   0   0   0   0   3   1  52   1 943]]
+2020-10-20 16:01:48.535 | DEBUG    | client:test:207 - Class precision: [0.7428088  0.9875     0.77164605 0.8166215  0.76737452 0.9709242
+ 0.72298326 0.90435606 0.95695696 0.95348837]
+2020-10-20 16:01:48.536 | DEBUG    | client:test:208 - Class recall: [0.878 0.948 0.811 0.904 0.795 0.935 0.475 0.955 0.956 0.943]
+2020-10-20 16:01:48.538 | INFO     | server:train_subset_of_clients:38 - Training epoch #8 on client #37
+2020-10-20 16:01:48.567 | INFO     | client:train:139 - [8,     0] loss: 0.007
+2020-10-20 16:01:50.475 | INFO     | client:train:139 - [8,   100] loss: 0.511
+2020-10-20 16:01:50.841 | INFO     | server:train_subset_of_clients:38 - Training epoch #8 on client #11
+2020-10-20 16:01:50.861 | INFO     | client:train:139 - [8,     0] loss: 0.001
+2020-10-20 16:01:52.770 | INFO     | client:train:139 - [8,   100] loss: 0.461
+2020-10-20 16:01:53.131 | INFO     | server:train_subset_of_clients:38 - Training epoch #8 on client #35
+2020-10-20 16:01:53.151 | INFO     | client:train:139 - [8,     0] loss: 0.005
+2020-10-20 16:01:55.071 | INFO     | client:train:139 - [8,   100] loss: 0.462
+2020-10-20 16:01:55.431 | INFO     | server:train_subset_of_clients:38 - Training epoch #8 on client #7
+2020-10-20 16:01:55.452 | INFO     | client:train:139 - [8,     0] loss: 0.001
+2020-10-20 16:01:57.364 | INFO     | client:train:139 - [8,   100] loss: 0.451
+2020-10-20 16:01:57.732 | INFO     | server:train_subset_of_clients:38 - Training epoch #8 on client #8
+2020-10-20 16:01:57.751 | INFO     | client:train:139 - [8,     0] loss: 0.005
+2020-10-20 16:01:59.666 | INFO     | client:train:139 - [8,   100] loss: 0.459
+2020-10-20 16:02:00.027 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:02:00.030 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:02:00.032 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:02:00.033 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:02:00.035 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:02:00.037 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:02:00.038 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:02:00.040 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:02:00.041 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:02:00.043 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:02:00.045 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:02:00.046 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:02:00.048 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:02:00.049 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:02:00.051 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:02:00.053 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:02:00.055 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:02:00.056 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:02:00.058 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:02:00.059 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:02:00.061 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:02:00.063 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:02:00.064 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:02:00.066 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:02:00.067 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:02:00.069 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:02:00.071 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:02:00.072 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:02:00.074 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:02:00.075 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:02:00.077 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:02:00.079 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:02:00.080 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:02:00.082 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:02:00.084 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:02:00.085 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:02:00.087 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:02:00.088 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:02:00.090 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:02:00.092 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:02:00.093 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:02:00.095 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:02:00.097 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:02:00.098 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:02:00.100 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:02:00.102 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:02:00.103 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:02:00.105 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:02:00.107 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:02:00.108 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:02:00.110 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:02:03.875 | DEBUG    | client:test:203 - Test set: Accuracy: 8547/10000 (85%)
+2020-10-20 16:02:03.876 | DEBUG    | client:test:204 - Test set: Loss: 4.051730811595917
+2020-10-20 16:02:03.905 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.87      0.72      0.79      1000
+           1       0.97      0.97      0.97      1000
+           2       0.90      0.63      0.74      1000
+           3       0.88      0.86      0.87      1000
+           4       0.70      0.88      0.78      1000
+           5       0.97      0.94      0.95      1000
+           6       0.58      0.71      0.64      1000
+           7       0.89      0.97      0.92      1000
+           8       0.97      0.95      0.96      1000
+           9       0.97      0.92      0.94      1000
+
+    accuracy                           0.85     10000
+   macro avg       0.87      0.85      0.86     10000
+weighted avg       0.87      0.85      0.86     10000
+
+2020-10-20 16:02:03.906 | DEBUG    | client:test:206 - Confusion Matrix:
+[[725   1   7  39   9   4 204   1  10   0]
+ [  1 967   3  13   6   0   8   0   2   0]
+ [ 10   1 632   8 198   2 146   0   3   0]
+ [ 11  21   1 859  48   0  60   0   0   0]
+ [  1   2  18  19 880   0  78   0   2   0]
+ [  0   0   0   1   0 940   2  48   1   8]
+ [ 84   3  42  31 118   1 709   0  12   0]
+ [  0   0   0   0   0  14   0 967   1  18]
+ [  0   5   1   9   3   4  24   5 949   0]
+ [  0   0   0   0   0   8   1  71   1 919]]
+2020-10-20 16:02:03.906 | DEBUG    | client:test:207 - Class precision: [0.87139423 0.967      0.89772727 0.87742594 0.69730586 0.96608428
+ 0.57548701 0.88553114 0.96738022 0.97248677]
+2020-10-20 16:02:03.907 | DEBUG    | client:test:208 - Class recall: [0.725 0.967 0.632 0.859 0.88  0.94  0.709 0.967 0.949 0.919]
+2020-10-20 16:02:03.909 | INFO     | server:train_subset_of_clients:38 - Training epoch #9 on client #22
+2020-10-20 16:02:03.940 | INFO     | client:train:139 - [9,     0] loss: 0.002
+2020-10-20 16:02:05.852 | INFO     | client:train:139 - [9,   100] loss: 0.459
+2020-10-20 16:02:06.211 | INFO     | server:train_subset_of_clients:38 - Training epoch #9 on client #32
+2020-10-20 16:02:06.230 | INFO     | client:train:139 - [9,     0] loss: 0.003
+2020-10-20 16:02:08.159 | INFO     | client:train:139 - [9,   100] loss: 0.466
+2020-10-20 16:02:08.525 | INFO     | server:train_subset_of_clients:38 - Training epoch #9 on client #15
+2020-10-20 16:02:08.545 | INFO     | client:train:139 - [9,     0] loss: 0.003
+2020-10-20 16:02:10.455 | INFO     | client:train:139 - [9,   100] loss: 0.440
+2020-10-20 16:02:10.818 | INFO     | server:train_subset_of_clients:38 - Training epoch #9 on client #34
+2020-10-20 16:02:10.838 | INFO     | client:train:139 - [9,     0] loss: 0.000
+2020-10-20 16:02:12.751 | INFO     | client:train:139 - [9,   100] loss: 0.478
+2020-10-20 16:02:13.120 | INFO     | server:train_subset_of_clients:38 - Training epoch #9 on client #13
+2020-10-20 16:02:13.140 | INFO     | client:train:139 - [9,     0] loss: 0.021
+2020-10-20 16:02:15.053 | INFO     | client:train:139 - [9,   100] loss: 0.531
+2020-10-20 16:02:15.414 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:02:15.417 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:02:15.418 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:02:15.420 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:02:15.422 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:02:15.424 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:02:15.426 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:02:15.427 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:02:15.429 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:02:15.430 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:02:15.432 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:02:15.434 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:02:15.435 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:02:15.437 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:02:15.439 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:02:15.440 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:02:15.442 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:02:15.443 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:02:15.445 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:02:15.446 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:02:15.448 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:02:15.450 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:02:15.451 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:02:15.453 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:02:15.454 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:02:15.456 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:02:15.458 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:02:15.459 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:02:15.461 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:02:15.463 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:02:15.464 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:02:15.466 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:02:15.467 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:02:15.469 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:02:15.471 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:02:15.472 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:02:15.474 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:02:15.475 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:02:15.477 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:02:15.479 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:02:15.480 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:02:15.482 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:02:15.484 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:02:15.485 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:02:15.487 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:02:15.488 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:02:15.490 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:02:15.492 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:02:15.493 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:02:15.495 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:02:15.497 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:02:19.287 | DEBUG    | client:test:203 - Test set: Accuracy: 8634/10000 (86%)
+2020-10-20 16:02:19.287 | DEBUG    | client:test:204 - Test set: Loss: 3.8987264037132263
+2020-10-20 16:02:19.318 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.81      0.81      0.81      1000
+           1       1.00      0.93      0.96      1000
+           2       0.82      0.77      0.79      1000
+           3       0.81      0.89      0.85      1000
+           4       0.73      0.87      0.79      1000
+           5       0.94      0.95      0.95      1000
+           6       0.70      0.56      0.62      1000
+           7       0.93      0.92      0.93      1000
+           8       0.94      0.97      0.95      1000
+           9       0.94      0.96      0.95      1000
+
+    accuracy                           0.86     10000
+   macro avg       0.86      0.86      0.86     10000
+weighted avg       0.86      0.86      0.86     10000
+
+2020-10-20 16:02:19.320 | DEBUG    | client:test:206 - Confusion Matrix:
+[[806   0  20  61   9   6  81   0  17   0]
+ [  0 933   5  45   6   1   7   0   2   1]
+ [ 11   0 768  11 139   3  58   0  10   0]
+ [ 18   1   5 894  38   1  42   0   1   0]
+ [  1   0  46  32 866   1  50   0   4   0]
+ [  0   0   0   2   0 955   0  27   1  15]
+ [153   0  87  44 123   2 564   0  27   0]
+ [  0   0   0   0   0  35   0 920   1  44]
+ [  1   1   3   8   4   3   4   5 971   0]
+ [  0   0   0   0   0   5   0  37   1 957]]
+2020-10-20 16:02:19.321 | DEBUG    | client:test:207 - Class precision: [0.81414141 0.99786096 0.82226981 0.81494986 0.73080169 0.94367589
+ 0.69975186 0.93023256 0.93816425 0.94100295]
+2020-10-20 16:02:19.322 | DEBUG    | client:test:208 - Class recall: [0.806 0.933 0.768 0.894 0.866 0.955 0.564 0.92  0.971 0.957]
+2020-10-20 16:02:19.324 | INFO     | server:train_subset_of_clients:38 - Training epoch #10 on client #45
+2020-10-20 16:02:19.353 | INFO     | client:train:139 - [10,     0] loss: 0.008
+2020-10-20 16:02:21.263 | INFO     | client:train:139 - [10,   100] loss: 0.389
+2020-10-20 16:02:21.631 | INFO     | server:train_subset_of_clients:38 - Training epoch #10 on client #0
+2020-10-20 16:02:21.651 | INFO     | client:train:139 - [10,     0] loss: 0.002
+2020-10-20 16:02:23.553 | INFO     | client:train:139 - [10,   100] loss: 0.452
+2020-10-20 16:02:23.915 | INFO     | server:train_subset_of_clients:38 - Training epoch #10 on client #43
+2020-10-20 16:02:23.935 | INFO     | client:train:139 - [10,     0] loss: 0.008
+2020-10-20 16:02:25.846 | INFO     | client:train:139 - [10,   100] loss: 0.404
+2020-10-20 16:02:26.207 | INFO     | server:train_subset_of_clients:38 - Training epoch #10 on client #29
+2020-10-20 16:02:26.227 | INFO     | client:train:139 - [10,     0] loss: 0.001
+2020-10-20 16:02:28.169 | INFO     | client:train:139 - [10,   100] loss: 0.402
+2020-10-20 16:02:28.528 | INFO     | server:train_subset_of_clients:38 - Training epoch #10 on client #47
+2020-10-20 16:02:28.549 | INFO     | client:train:139 - [10,     0] loss: 0.001
+2020-10-20 16:02:30.459 | INFO     | client:train:139 - [10,   100] loss: 0.433
+2020-10-20 16:02:30.824 | INFO     | server:train_subset_of_clients:41 - Averaging client parameters
+2020-10-20 16:02:30.826 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #0
+2020-10-20 16:02:30.828 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #1
+2020-10-20 16:02:30.830 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #2
+2020-10-20 16:02:30.831 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #3
+2020-10-20 16:02:30.833 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #4
+2020-10-20 16:02:30.835 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #5
+2020-10-20 16:02:30.836 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #6
+2020-10-20 16:02:30.838 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #7
+2020-10-20 16:02:30.839 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #8
+2020-10-20 16:02:30.841 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #9
+2020-10-20 16:02:30.843 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #10
+2020-10-20 16:02:30.844 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #11
+2020-10-20 16:02:30.846 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #12
+2020-10-20 16:02:30.848 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #13
+2020-10-20 16:02:30.849 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #14
+2020-10-20 16:02:30.851 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #15
+2020-10-20 16:02:30.852 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #16
+2020-10-20 16:02:30.854 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #17
+2020-10-20 16:02:30.855 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #18
+2020-10-20 16:02:30.857 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #19
+2020-10-20 16:02:30.859 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #20
+2020-10-20 16:02:30.860 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #21
+2020-10-20 16:02:30.862 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #22
+2020-10-20 16:02:30.863 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #23
+2020-10-20 16:02:30.865 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #24
+2020-10-20 16:02:30.867 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #25
+2020-10-20 16:02:30.868 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #26
+2020-10-20 16:02:30.870 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #27
+2020-10-20 16:02:30.872 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #28
+2020-10-20 16:02:30.873 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #29
+2020-10-20 16:02:30.875 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #30
+2020-10-20 16:02:30.876 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #31
+2020-10-20 16:02:30.878 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #32
+2020-10-20 16:02:30.880 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #33
+2020-10-20 16:02:30.881 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #34
+2020-10-20 16:02:30.883 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #35
+2020-10-20 16:02:30.885 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #36
+2020-10-20 16:02:30.886 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #37
+2020-10-20 16:02:30.888 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #38
+2020-10-20 16:02:30.889 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #39
+2020-10-20 16:02:30.891 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #40
+2020-10-20 16:02:30.892 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #41
+2020-10-20 16:02:30.894 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #42
+2020-10-20 16:02:30.896 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #43
+2020-10-20 16:02:30.897 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #44
+2020-10-20 16:02:30.899 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #45
+2020-10-20 16:02:30.900 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #46
+2020-10-20 16:02:30.902 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #47
+2020-10-20 16:02:30.904 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #48
+2020-10-20 16:02:30.905 | INFO     | server:train_subset_of_clients:46 - Updating parameters on client #49
+2020-10-20 16:02:34.701 | DEBUG    | client:test:203 - Test set: Accuracy: 8686/10000 (87%)
+2020-10-20 16:02:34.702 | DEBUG    | client:test:204 - Test set: Loss: 3.70571768283844
+2020-10-20 16:02:34.733 | DEBUG    | client:test:205 - Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.81      0.85      0.83      1000
+           1       1.00      0.94      0.97      1000
+           2       0.85      0.74      0.79      1000
+           3       0.87      0.87      0.87      1000
+           4       0.75      0.86      0.80      1000
+           5       0.94      0.96      0.95      1000
+           6       0.66      0.62      0.64      1000
+           7       0.92      0.93      0.93      1000
+           8       0.95      0.97      0.96      1000
+           9       0.95      0.95      0.95      1000
+
+    accuracy                           0.87     10000
+   macro avg       0.87      0.87      0.87     10000
+weighted avg       0.87      0.87      0.87     10000
+
+2020-10-20 16:02:34.734 | DEBUG    | client:test:206 - Confusion Matrix:
+[[846   0   9  31   7   6  90   0  11   0]
+ [  2 938   5  35   6   1  11   0   2   0]
+ [ 11   0 743   7 128   2 102   0   7   0]
+ [ 27   3   5 869  46   1  47   0   2   0]
+ [  2   0  44  25 865   1  59   0   4   0]
+ [  0   0   0   1   0 958   1  26   1  13]
+ [161   0  70  27 102   1 622   0  17   0]
+ [  0   0   0   0   0  36   0 929   1  34]
+ [  1   1   1   6   4   3  11   5 968   0]
+ [  0   0   0   0   0   5   1  45   1 948]]
+2020-10-20 16:02:34.735 | DEBUG    | client:test:207 - Class precision: [0.80571429 0.99575372 0.84720639 0.86813187 0.74697755 0.94477318
+ 0.65889831 0.92437811 0.95463511 0.95276382]
+2020-10-20 16:02:34.736 | DEBUG    | client:test:208 - Class recall: [0.846 0.938 0.743 0.869 0.865 0.958 0.622 0.929 0.968 0.948]
