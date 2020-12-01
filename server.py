@@ -1,4 +1,6 @@
 from loguru import logger
+import torch
+import time
 from federated_learning.arguments import Arguments
 from federated_learning.utils import generate_data_loaders_from_distributed_dataset
 from federated_learning.datasets.data_distribution import distribute_batches_equally
@@ -12,6 +14,11 @@ from federated_learning.utils import load_test_data_loader
 from federated_learning.utils import generate_experiment_ids
 from federated_learning.utils import convert_results_to_csv
 from client import Client
+import contribution_evaluation
+import copy
+import test
+
+
 
 def train_subset_of_clients(epoch, args, clients, poisoned_workers):
     """
@@ -42,11 +49,23 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
     parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
     new_nn_params = average_nn_parameters(parameters)
 
+    result_deletion = contribution_evaluation.calculate_influence(args, clients, random_workers, epoch)
+    result_deletion_acc = [i[0] for i in result_deletion]
+    result_deletion_loss = [i[1] for i in result_deletion]
+
+
     for client in clients:
         args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
         client.update_nn_parameters(new_nn_params)
 
+    accuracy, loss, class_precision, class_recall = clients[0].test()
+    Influence_acc = result_deletion_acc[:] = [accuracy - x[0] for x in result_deletion]
+    Influence_loss = result_deletion_loss[:] = [loss - x[1] for x in result_deletion]
+    args.get_logger().info("Influence on clients: by acc: #{}, by loss: #{}", str(Influence_acc), str(Influence_loss))
+
+
     return clients[0].test(), random_workers
+
 
 def create_clients(args, train_data_loaders, test_data_loader):
     """
@@ -65,10 +84,14 @@ def run_machine_learning(clients, args, poisoned_workers):
     epoch_test_set_results = []
     worker_selection = []
     for epoch in range(1, args.get_num_epochs() + 1):
+        # torch.cuda.synchronize()
+        start = time.time()
         results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers)
-
+        # torch.cuda.synchronize()
         epoch_test_set_results.append(results)
         worker_selection.append(workers_selected)
+        end = time.time()
+        args.get_logger().debug('Time for training ' + str(args.get_net()) + ' for a round without contribution evaluation is: ' + str((end - start)) + ' seconds')
 
     return convert_results_to_csv(epoch_test_set_results), worker_selection
 

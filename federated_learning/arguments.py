@@ -22,7 +22,7 @@ class Arguments:
 
         self.batch_size = 10
         self.test_batch_size = 1000
-        self.epochs = 100
+        self.epochs = 1
         self.lr = 0.01
         self.momentum = 0.5
         self.cuda = False
@@ -47,8 +47,8 @@ class Arguments:
         # self.num_poisoned_workers = 10
 
         # self.net = Cifar10CNN
-        self.net = FashionMNISTCNN
-        # self.net = Cifar100ResNet
+        # self.net = FashionMNISTCNN
+        self.net = Cifar100ResNet
         # self.net = FashionMNISTResNet
         # self.net = Cifar10ResNet
         # self.net = Cifar100VGG
@@ -56,11 +56,11 @@ class Arguments:
         # self.train_data_loader_pickle_path = "data_loaders/cifar10/train_data_loader.pickle"
         # self.test_data_loader_pickle_path = "data_loaders/cifar10/test_data_loader.pickle"
 
-        self.train_data_loader_pickle_path = "data_loaders/fashion-mnist/train_data_loader.pickle"
-        self.test_data_loader_pickle_path = "data_loaders/fashion-mnist/test_data_loader.pickle"
+        # self.train_data_loader_pickle_path = "data_loaders/fashion-mnist/train_data_loader.pickle"
+        # self.test_data_loader_pickle_path = "data_loaders/fashion-mnist/test_data_loader.pickle"
 
-        # self.train_data_loader_pickle_path = "data_loaders/cifar100/train_data_loader.pickle"
-        # self.test_data_loader_pickle_path = "data_loaders/cifar100/test_data_loader.pickle"
+        self.train_data_loader_pickle_path = "data_loaders/cifar100/train_data_loader.pickle"
+        self.test_data_loader_pickle_path = "data_loaders/cifar100/test_data_loader.pickle"
 
         self.loss_function = torch.nn.CrossEntropyLoss
 
