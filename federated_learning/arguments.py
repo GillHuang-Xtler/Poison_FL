@@ -30,7 +30,7 @@ class Arguments:
         self.log_interval = 100
         self.kwargs = {}
         self.contribution_measurement_round = 1
-        self.contribution_measurement_metric = 'Shapley'
+        self.contribution_measurement_metric = 'Influence'
 
         self.scheduler_step_size = 50
         self.scheduler_gamma = 0.5
@@ -40,6 +40,7 @@ class Arguments:
         self.round_worker_selection_strategy_kwargs = None
 
         self.save_model = False
+        self.save_temp_model = False
         self.save_epoch_interval = 1
         self.save_model_path = "models"
         self.epoch_save_start_suffix = "start"

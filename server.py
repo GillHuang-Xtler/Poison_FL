@@ -65,11 +65,11 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
         accuracy, loss, class_precision, class_recall = clients[0].test()
         Influence_acc = result_deletion_acc[:] = [accuracy - x[0] for x in result_deletion]
         Influence_loss = result_deletion_loss[:] = [loss - x[1] for x in result_deletion]
-        args.get_logger().info("Influence on clients: by acc: #{}, by loss: #{}", str(Influence_acc), str(Influence_loss))
+        args.get_logger().info("Influence on clients: by acc: #{}, by loss: #{} on selected #{}", str(Influence_acc), str(Influence_loss), str(random_workers))
 
     elif args.contribution_measurement_metric == 'Shapley' and args.contribution_measurement_round == epoch:
-        shapley = contribution_evaluation.calculate_shapley_values(args, clients, random_workers, epoch)
-        args.get_logger().info("Shapley on clients: by acc: #{}", str(shapley))
+        shapley_acc, shapley_loss = contribution_evaluation.calculate_shapley_values(args, clients, random_workers, epoch)
+        args.get_logger().info("Shapley on clients: by acc: #{}, by loss: #{} on selected #{}", str(shapley_acc), str(shapley_loss), str(random_workers))
 
         for client in clients:
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
