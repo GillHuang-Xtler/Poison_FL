@@ -29,6 +29,8 @@ class Arguments:
         self.shuffle = False
         self.log_interval = 100
         self.kwargs = {}
+        self.contribution_measurement_round = 1
+        self.contribution_measurement_metric = 'Shapley'
 
         self.scheduler_step_size = 50
         self.scheduler_gamma = 0.5
@@ -46,21 +48,21 @@ class Arguments:
         self.num_workers = 50
         # self.num_poisoned_workers = 10
 
-        # self.net = Cifar10CNN
+        self.net = Cifar10CNN
         # self.net = FashionMNISTCNN
-        self.net = Cifar100ResNet
+        # self.net = Cifar100ResNet
         # self.net = FashionMNISTResNet
         # self.net = Cifar10ResNet
         # self.net = Cifar100VGG
 
-        # self.train_data_loader_pickle_path = "data_loaders/cifar10/train_data_loader.pickle"
-        # self.test_data_loader_pickle_path = "data_loaders/cifar10/test_data_loader.pickle"
+        self.train_data_loader_pickle_path = "data_loaders/cifar10/train_data_loader.pickle"
+        self.test_data_loader_pickle_path = "data_loaders/cifar10/test_data_loader.pickle"
 
         # self.train_data_loader_pickle_path = "data_loaders/fashion-mnist/train_data_loader.pickle"
         # self.test_data_loader_pickle_path = "data_loaders/fashion-mnist/test_data_loader.pickle"
 
-        self.train_data_loader_pickle_path = "data_loaders/cifar100/train_data_loader.pickle"
-        self.test_data_loader_pickle_path = "data_loaders/cifar100/test_data_loader.pickle"
+        # self.train_data_loader_pickle_path = "data_loaders/cifar100/train_data_loader.pickle"
+        # self.test_data_loader_pickle_path = "data_loaders/cifar100/test_data_loader.pickle"
 
         self.loss_function = torch.nn.CrossEntropyLoss
 
@@ -178,6 +180,12 @@ class Arguments:
         self.logger.debug("LR: {}".format(lr))
 
         return lr
+
+    def get_contribution_measurement_round(self):
+        return  self.contribution_measurement_round
+
+    def get_contribution_measurement_metric(self):
+        return self.contribution_measurement_metric
 
     def should_save_model(self, epoch_idx):
         """
