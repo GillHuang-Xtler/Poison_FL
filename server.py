@@ -54,7 +54,7 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
             client.update_nn_parameters(new_nn_params)
 
-    elif args.contribution_measurement_metric == 'Influence' and args.contribution_measurement_round == epoch:
+    elif args.contribution_measurement_metric == 'Influence' and (args.contribution_measurement_round == epoch or args.contribution_measurement_round == epoch+1 or args.contribution_measurement_round == epoch+2 or args.contribution_measurement_round == epoch+3 or args.contribution_measurement_round == epoch+4):
         result_deletion = contribution_evaluation.calculate_influence(args, clients, random_workers, epoch)
         result_deletion_acc = [i[0] for i in result_deletion]
         result_deletion_loss = [i[1] for i in result_deletion]
@@ -71,6 +71,11 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
         shapley_acc, shapley_loss = contribution_evaluation.calculate_shapley_values(args, clients, random_workers, epoch)
         args.get_logger().info("Shapley on clients: by acc: #{}, by loss: #{} on selected #{}", str(shapley_acc), str(shapley_loss), str(random_workers))
 
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+
+    else:
         for client in clients:
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
             client.update_nn_parameters(new_nn_params)

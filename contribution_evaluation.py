@@ -72,7 +72,7 @@ def calculate_shapley_values(args, clients, random_workers, epoch):
     for client_idx in random_workers:
         for subset in set_of_all_subsets:
             if client_idx in subset:
-                remainderSet = subset.difference(set([client]))
+                remainderSet = subset.difference(set([client_idx]))
                 b = len(remainderSet)
                 fact_value = (len(client_list) - b - 1)
                 other_parameters = [clients[client].get_nn_parameters() for client in subset]
