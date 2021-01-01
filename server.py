@@ -40,11 +40,18 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
         poisoned_workers,
         kwargs)
 
+    start = time.time()
     for client_idx in random_workers:
         args.get_logger().info("Training epoch #{} on client #{}", str(epoch),
                                str(clients[client_idx].get_client_index()))
         clients[client_idx].train(epoch)
+    end = time.time()
+    args.get_logger().debug(
+        'Time for pure training ' + str(
+            args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+            (end - start)) + ' seconds')
 
+    start = time.time()
     args.get_logger().info("Averaging client parameters")
     parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
     new_nn_params = average_nn_parameters(parameters)
@@ -53,6 +60,10 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
         for client in clients:
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
             client.update_nn_parameters(new_nn_params)
+        end = time.time()
+        args.get_logger().debug(
+            'Time for updating parameters ' + str(args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+                (end - start)) + ' seconds')
 
     elif args.contribution_measurement_metric == 'Influence' and (args.contribution_measurement_round == epoch or args.contribution_measurement_round == epoch+1 or args.contribution_measurement_round == epoch+2 or args.contribution_measurement_round == epoch+3 or args.contribution_measurement_round == epoch+4):
         result_deletion = contribution_evaluation.calculate_influence(args, clients, random_workers, epoch)
@@ -79,6 +90,10 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
         for client in clients:
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
             client.update_nn_parameters(new_nn_params)
+        end = time.time()
+        args.get_logger().debug(
+            'Time for updating parameters ' + str(args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+                (end - start)) + ' seconds')
 
     return clients[0].test(), random_workers
 
