@@ -1,6 +1,6 @@
 *.log
 *.pyc
-/data_loders
+/data_loaders
 /data
 /default_models
 /venv

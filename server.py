@@ -16,7 +16,7 @@ from federated_learning.utils import convert_results_to_csv
 from client import Client
 import contribution_evaluation
 import copy
-import test
+import plot
 
 
 def train_subset_of_clients(epoch, args, clients, poisoned_workers):
@@ -149,8 +149,8 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
 
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
-    # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_1_only(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
+    # distributed_train_dataset = distribute_batches_reduce_1_only(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
     poisoned_workers = identify_random_elements(args.get_num_workers(), args.get_num_poisoned_workers())
