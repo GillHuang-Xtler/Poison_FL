@@ -49,7 +49,7 @@ class FashionMNISTResNet(nn.Module):
                                   ResNet_block(64,128,2),
                                   ResNet_block(128,256,2),
                                   ResNet_block(256,512,2))
-        self.block3=nn.Sequential(nn.AvgPool2d(kernel_size=3))
+        self.block3=nn.Sequential(nn.AvgPool2d(kernel_size=2))
         self.Dense=nn.Linear(512,10)
 
 

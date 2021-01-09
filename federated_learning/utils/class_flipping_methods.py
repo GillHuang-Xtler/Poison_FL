@@ -36,6 +36,20 @@ def replace_0_with_6(targets, target_set):
 
     return targets
 
+def replace_0_with_2(targets, target_set):
+    """
+    :param targets: Target class IDs
+    :type targets: list
+    :param target_set: Set of class IDs possible
+    :type target_set: list
+    :return: new class IDs
+    """
+    for idx in range(len(targets)):
+        if targets[idx] == 0:
+            targets[idx] = 2
+
+    return targets
+
 def replace_4_with_6(targets, target_set):
     """
     :param targets: Target class IDs
@@ -190,19 +204,6 @@ def replace_1_with_9(targets, target_set):
 
     return targets
 
-def replace_0_with_2(targets, target_set):
-    """
-    :param targets: Target class IDs
-    :type targets: list
-    :param target_set: Set of class IDs possible
-    :type target_set: list
-    :return: new class IDs
-    """
-    for idx in range(len(targets)):
-        if targets[idx] == 0:
-            targets[idx] = 2
-
-    return targets
 
 def replace_5_with_9(targets, target_set):
     """
