@@ -19,8 +19,10 @@ def poison_data(logger, distributed_dataset, num_workers, poisoned_worker_ids, r
     """
     # TODO: Add support for multiple replacement methods?
     poisoned_dataset = []
-
-    class_labels = list(set(distributed_dataset[0][1]))
+    class_label_set = set()
+    for i in range(num_workers):
+        class_label_set = class_label_set | set(distributed_dataset[i][1])
+    class_labels = list(class_label_set)
 
     logger.info("Poisoning data for workers: {}".format(str(poisoned_worker_ids)))
 
@@ -32,7 +34,8 @@ def poison_data(logger, distributed_dataset, num_workers, poisoned_worker_ids, r
                                                                       replacement_method))
             elif poison_effort == 'half' and worker_idx in range(0, int(len(distributed_dataset) / 2)):
                 poisoned_dataset.append(distributed_dataset[worker_idx])
-            else:
+
+            elif poison_effort == 'half' and worker_idx in range(int(len(distributed_dataset) / 2), int(len(distributed_dataset))):
                 poisoned_dataset.append(apply_class_label_replacement(distributed_dataset[worker_idx][0],
                                                                       distributed_dataset[worker_idx][1],
                                                                       replacement_method))
@@ -42,3 +45,4 @@ def poison_data(logger, distributed_dataset, num_workers, poisoned_worker_ids, r
     log_client_data_statistics(logger, class_labels, poisoned_dataset)
 
     return poisoned_dataset
+
