@@ -1,0 +1,10 @@
+*.log
+*.pyc
+/data_loders
+/data
+/default_models
+/venv
+/__pycache__
+/.idea
+/logs
+/res
