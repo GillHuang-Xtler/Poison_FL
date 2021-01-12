@@ -14,13 +14,13 @@ def plt_txt():
     plt.show()
 
 def plt_acc():
-    path1 = 'test.txt'
+    path1 = './test.txt'
     filename1 = path1
     X1 = []
     with open(filename1, 'r') as f:
         lines = f.readlines()
         for line in lines:
-            value = [float(s) for s in line.split()]
+            value = [float(s) for s in line.split(',')]
             X1.append(value[0])
     print(X1)
 
@@ -55,10 +55,33 @@ def plt_acc():
     print(X4)
     # plt.plot(X4)
 
+    path5='./res/1113_results.csv'
+    filename5 = path5
+    X5 = []
+    with open(filename5, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X5.append(value[0])
+    print(X5)
+
+    path6='./res/1122_results.csv'
+    filename6 = path6
+    X6 = []
+    with open(filename6, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X6.append(value[0])
+    print(X5)
+
     plt.plot(X1, color='green', label='IID')
     plt.plot(X2, color='skyblue', label='Reduce-class')
     plt.plot(X3, color='red', label='Reduce-class-plus')
     plt.plot(X4, color='blue', label='Reduce-class-only')
+    plt.plot(X5, color='orange', label='Reduce-class-must')
+    plt.plot(X6, color='brown', label='Reduce-class-mustp')
+
     plt.legend()
     plt.xlabel('GLOBAL ROUNDS')
     plt.ylabel('ACCURACY')
@@ -84,7 +107,7 @@ def plt_class_recall_1():
         lines = f.readlines()
         for line in lines:
             value = [float(s) for s in line.split(',')]
-            X2.append(value[16])
+            X2.append(value[13])
     print(X2)
 
     path3 = './res/1082_results.csv'
@@ -108,10 +131,33 @@ def plt_class_recall_1():
     print(X4)
     # plt.plot(X4)
 
+    path5='./res/1113_results.csv'
+    filename5 = path5
+    X5 = []
+    with open(filename5, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X5.append(value[13])
+    print(X5)
+
+    path6='./res/1122_results.csv'
+    filename6 = path6
+    X6 = []
+    with open(filename6, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X6.append(value[13])
+    print(X6)
+
     plt.plot(X1, color='green', label='IID', linestyle=':', marker = 'o', markersize = 2)
     plt.plot(X2, color='skyblue', label='Reduce-class',linestyle=':', marker = 'o', markersize = 2)
     plt.plot(X3, color='red', label='Reduce-class-plus',linestyle=':', marker = 'o', markersize = 2)
     plt.plot(X4, color='blue', label='Reduce-class-only',linestyle=':', marker = 'o', markersize = 2)
+    plt.plot(X5, color='orange', label='Reduce-class-must',linestyle=':', marker = 'o', markersize = 2)
+    plt.plot(X5, color='brown', label='Reduce-class-mustp',linestyle=':', marker = 'o', markersize = 2)
+
     plt.legend()
     plt.xlabel('GLOBAL ROUNDS')
     plt.ylabel('SOURCE CLASS RECALL')
@@ -120,4 +166,16 @@ def plt_class_recall_1():
 if __name__ =='__main__':
     # plt_txt()
     plt_acc()
-    plt_class_recall_1()
+    # plt_class_recall_1()
+    # path1 = './res/1101_results.csv'
+    # filename1 = path1
+    # X1 = []
+    # with open(filename1, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X1.append(value[0])
+    #
+    # print(X1)
+    # plt.plot(X1)
+    # plt.show()

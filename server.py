@@ -7,7 +7,7 @@ from federated_learning.datasets.data_distribution import distribute_batches_equ
 from federated_learning.utils import average_nn_parameters
 from federated_learning.utils import convert_distributed_data_into_numpy
 from federated_learning.utils import poison_data
-from federated_learning.utils import identify_random_elements
+from federated_learning.utils import identify_random_elements, identify_random_elements_inc_49
 from federated_learning.utils import save_results
 from federated_learning.utils import load_train_data_loader
 from federated_learning.utils import load_test_data_loader
@@ -97,6 +97,85 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers):
 
     return clients[0].test(), random_workers
 
+def train_subset_of_clients_inc_49(epoch, args, clients, poisoned_workers):
+    """
+    Train a subset of clients per round.
+
+    :param epoch: epoch
+    :type epoch: int
+    :param args: arguments
+    :type args: Arguments
+    :param clients: clients
+    :type clients: list(Client)
+    :param poisoned_workers: indices of poisoned workers
+    :type poisoned_workers: list(int)
+    """
+    kwargs = args.get_round_worker_selection_strategy_kwargs()
+    kwargs["current_epoch_number"] = epoch
+
+    random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
+        list(range(args.get_num_workers())),
+        poisoned_workers,
+        kwargs)
+    random_workers.append(49)
+
+    start = time.time()
+    for client_idx in random_workers:
+        args.get_logger().info("Training epoch #{} on client #{}", str(epoch),
+                               str(clients[client_idx].get_client_index()))
+        clients[client_idx].train(epoch)
+    end = time.time()
+    args.get_logger().debug(
+        'Time for pure training ' + str(
+            args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+            (end - start)) + ' seconds')
+
+    start = time.time()
+    args.get_logger().info("Averaging client parameters")
+    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    new_nn_params = average_nn_parameters(parameters)
+
+    if args.contribution_measurement_metric == 'None':
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+        end = time.time()
+        args.get_logger().debug(
+            'Time for updating parameters ' + str(args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+                (end - start)) + ' seconds')
+
+    elif args.contribution_measurement_metric == 'Influence' and (args.contribution_measurement_round == epoch or args.contribution_measurement_round == epoch+1 or args.contribution_measurement_round == epoch+2 or args.contribution_measurement_round == epoch+3 or args.contribution_measurement_round == epoch+4):
+        result_deletion = contribution_evaluation.calculate_influence(args, clients, random_workers, epoch)
+        result_deletion_acc = [i[0] for i in result_deletion]
+        result_deletion_loss = [i[1] for i in result_deletion]
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+
+        accuracy, loss, class_precision, class_recall = clients[0].test()
+        Influence_acc = result_deletion_acc[:] = [accuracy - x[0] for x in result_deletion]
+        Influence_loss = result_deletion_loss[:] = [loss - x[1] for x in result_deletion]
+        args.get_logger().info("Influence on clients: by acc: #{}, by loss: #{} on selected #{}", str(Influence_acc), str(Influence_loss), str(random_workers))
+
+    elif args.contribution_measurement_metric == 'Shapley' and args.contribution_measurement_round == epoch:
+        shapley_acc, shapley_loss = contribution_evaluation.calculate_shapley_values(args, clients, random_workers, epoch)
+        args.get_logger().info("Shapley on clients: by acc: #{}, by loss: #{} on selected #{}", str(shapley_acc), str(shapley_loss), str(random_workers))
+
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+
+    else:
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+        end = time.time()
+        args.get_logger().debug(
+            'Time for updating parameters ' + str(args.get_net()) + ' for a round without contribution evaluation is: ' + str(
+                (end - start)) + ' seconds')
+
+    return clients[0].test(), random_workers
+
 
 def create_clients(args, train_data_loaders, test_data_loader):
     """
@@ -118,7 +197,8 @@ def run_machine_learning(clients, args, poisoned_workers):
     for epoch in range(1, args.get_num_epochs() + 1):
         # torch.cuda.synchronize()
         start = time.time()
-        results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers)
+        # results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers)
+        results, workers_selected = train_subset_of_clients_inc_49(epoch, args, clients, poisoned_workers)
         # torch.cuda.synchronize()
         epoch_test_set_results.append(results)
         worker_selection.append(workers_selected)
@@ -149,8 +229,8 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
 
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
-    # distributed_train_dataset = distribute_batches_reduce_1_only(train_data_loader, args.get_num_workers())
+    # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_1_only(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
     poisoned_workers = identify_random_elements(args.get_num_workers(), args.get_num_poisoned_workers())
