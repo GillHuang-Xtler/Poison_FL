@@ -1,14 +1,8 @@
 *.log
 *.pyc
-<<<<<<< HEAD
 /data_loaders
-=======
-/data_loders
->>>>>>> 3a9ae887cd6fed4d39b1ee8b1c0ab762f8be549d
 /data
 /default_models
 /venv
 /__pycache__
 /.idea
-/logs
-/res
