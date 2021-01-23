@@ -9,7 +9,7 @@ import copy
 
 class Client:
 
-    def __init__(self, args, client_idx, train_data_loader, test_data_loader):
+    def __init__(self, args, client_idx, train_data_loader, test_data_loader, distributed_train_dataset):
         """
         :param args: experiment arguments
         :type args: Arguments
@@ -37,6 +37,8 @@ class Client:
 
         self.train_data_loader = train_data_loader
         self.test_data_loader = test_data_loader
+
+        self.distributed_train_dataset = distributed_train_dataset
 
     def initialize_device(self):
         """
@@ -100,6 +102,12 @@ class Client:
         """
         return self.net.state_dict()
 
+    def get_client_dataloader(self):
+        """
+        Return the NN's parameters.
+        """
+        return self.train_data_loader
+
     def update_nn_parameters(self, new_params):
         """
         Update the NN's parameters.
@@ -108,6 +116,19 @@ class Client:
         :type new_params: dict
         """
         self.net.load_state_dict(copy.deepcopy(new_params), strict=True)
+
+    def get_client_distribution(self):
+        label_class_set = {0,1,2,3,4,5,6,7,8,9}
+        client_class_nums = {class_val: 0 for class_val in label_class_set}
+        for target in self.distributed_train_dataset[1]:
+            try:
+                client_class_nums[target] += 1
+            except:
+                continue
+        return list(client_class_nums.values())
+
+    def get_client_datasize(self):
+        return len(self.distributed_train_dataset[1])
 
     def train(self, epoch):
         """

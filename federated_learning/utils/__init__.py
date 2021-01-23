@@ -15,7 +15,7 @@ from .data_loader_utils import generate_train_loader
 from .data_loader_utils import load_data_loader_from_file
 from .data_loader_utils import generate_test_loader
 from .data_loader_utils import save_data_loader_to_file
-from .fed_avg import average_nn_parameters
+from .fed_avg import average_nn_parameters, fed_average_nn_parameters
 from .client_utils import log_client_data_statistics
 from .poison_data import poison_data
 from .model_list_parser import *

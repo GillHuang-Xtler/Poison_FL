@@ -20,20 +20,19 @@ class Arguments:
     def __init__(self, logger):
         self.logger = logger
 
-        self.batch_size = 10
+        self.batch_size = 4
         self.test_batch_size = 1000
-        self.epochs = 500
-        self.lr = 0.1
-        self.momentum = 0.5
+        self.epochs = 200
+        self.lr = 0.001
+        self.momentum = 0.9
         self.cuda = False
         self.shuffle = False
         self.log_interval = 100
         self.kwargs = {}
-        self.contribution_measurement_round = 5
+        self.contribution_measurement_round = 150
         self.contribution_measurement_metric = 'None'
-
-        self.scheduler_step_size = 50
-        self.scheduler_gamma = 0.5
+        self.scheduler_step_size = 10
+        self.scheduler_gamma = 0.1
         self.min_lr = 1e-10
 
         self.round_worker_selection_strategy = None
