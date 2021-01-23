@@ -10,5 +10,8 @@ Poisoners for label flipping and backdooring. It is now ready for label flipping
 
 - The arguments are in 'arguments.py' + label_flipping_attack.py.
 - The traning round (epoch in this repository) should be set to 200.
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3a9ae887cd6fed4d39b1ee8b1c0ab762f8be549d

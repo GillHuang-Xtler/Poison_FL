@@ -63,6 +63,7 @@ def distribute_batches_reduce_1_plus(train_data_loader, num_workers):
         target_p = torch.index_select(target, 0, plus.view(-1))
         data_p = torch.index_select(data, 0, plus.view(-1))
         distributed_dataset[num_workers-1].append((data_p, target_p))
+        distributed_dataset[0].append((data_p, target_p))
 
     return distributed_dataset
 
