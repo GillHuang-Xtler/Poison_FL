@@ -237,17 +237,17 @@ if __name__ =='__main__':
     # plt_txt()
     # plt_acc()
     # plt_class_recall_1()
-    # path1 = './Book1.txt'
-    # filename1 = path1
-    # X1, Y1 = [], []
-    # with open(filename1, 'r') as f:
-    #     lines = f.readlines()
-    #     for line in lines:
-    #         value = [float(s) for s in line.split()]
-    #         X1.append(value[0])
-    #         Y1.append(value[1]/value[2]*100+60)
-    #
-    path2 = './res/1191_results.csv'
+
+    path1 = './res/1244_results.csv'
+    filename1 = path1
+    X1 = []
+    with open(filename1, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X1.append(value[0])
+
+    path2 = './res/1243_results.csv'
     filename2 = path2
     X2 = []
     with open(filename2, 'r') as f:
@@ -255,20 +255,24 @@ if __name__ =='__main__':
         for line in lines:
             value = [float(s) for s in line.split(',')]
             X2.append(value[0])
-    print(X2)
     #
-    path3='./res/1215_results.csv'
-    filename3 = path3
-    X3 = []
-    with open(filename3, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            value = [float(s) for s in line.split(',')]
-            X3.append(value[0])
-    print(X3)
+    # path2 = './res/cifarShapley.txt'
+    # filename2 = path2
+    # X2 , Y2= [], []
+    # with open(filename2, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split()]
+    #         X2.append(value[0])
+    #         Y2.append(value[1]/value[2]*200+10)
+    #         print(X2, Y2)
+    #
     #
     # plt.plot(X1, Y1, color='purple', label='Reduce-class-plus',linestyle=':', marker = 'o', markersize = 2 )
-    plt.plot(X2, color = 'brown', linewidth=3)
-    plt.plot(X3, color = 'red', linewidth=3)
-    plt.ylim(20,100)
+    # plt.plot(X2, Y2, color = 'purple', linestyle=':', marker = 'o', markersize = 2)
+    print(X1, X2)
+    plt.plot(X1, color = 'brown')
+    plt.plot(X2, color = 'blue')
+
+    # plt.ylim(40,100)
     plt.show()

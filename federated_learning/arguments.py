@@ -30,7 +30,7 @@ class Arguments:
         self.log_interval = 100
         self.kwargs = {}
         self.contribution_measurement_round = 150
-        self.contribution_measurement_metric = 'Shapley'
+        self.contribution_measurement_metric = 'None'
         self.scheduler_step_size = 50
         self.scheduler_gamma = 0.5
         self.min_lr = 1e-10
