@@ -233,12 +233,119 @@ def plt_class_recall_1():
     plt.ylabel('SOURCE CLASS RECALL')
     plt.show()
 
+def find_count(X1):
+    max_acc = 75
+    max40 = max_acc * 0.7
+    max60 = max_acc * 0.8
+    max80 = max_acc * 0.9
+
+    res4 = []
+    res6 = []
+    res8 = []
+    for i in range(len(X1)):
+        if X1[i] > max40:
+            res4.append(i)
+        if X1[i] > max60:
+            res6.append(i)
+        if X1[i] > max80:
+            res8.append(i)
+    return [res4[0], res6[0], res8[0]]
+
+
+def nun_maverick():
+
+    path3 = './res/1191_results.csv'
+    filename3 = path3
+    X3 = []
+    with open(filename3, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X3.append(value[13])
+
+    path4 = './res/1091_results.csv'
+    filename4 = path4
+    X4 = []
+    with open(filename4, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X4.append(value[13])
+
+
+    path5 = './res/1113_results.csv'
+    filename5 = path5
+    X5 = []
+    with open(filename5, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X5.append(value[13])
+
+    name_list = ['Random', 'FedFast', 'New']
+    num_list1 = []
+    num_list2 = []
+    num_list3 = []
+    num_list1.extend([X3[0], X4[0], X5[0]])
+    num_list2.extend([X3[1], X4[1], X5[1]])
+    num_list3.extend([X3[2], X4[2], X5[2]])
+
+    x = list(range(len(num_list1)))
+    total_width, n = 0.8, 2
+    width = total_width / n
+
+    plt.bar(x, num_list1, width=width, label='1 maverick', fc='y')
+    for i in range(len(x)):
+        x[i] = x[i] + width
+    plt.bar(x, num_list2, width=width, label='2 maverick', tick_label=name_list, fc='r')
+    plt.bar(x, num_list3, width=width, label='3 maverick', tick_label=name_list, fc='r')
+
+    plt.legend()
+    plt.show()
+
+    # path6='./res/1122_results.csv'
+    # filename6 = path6
+    # X6 = []
+    # with open(filename6, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X6.append(value[13])
+    # print(X6)
+    #
+    # path7='./res/1177_results.csv'
+    # filename7 = path7
+    # X7 = []
+    # with open(filename7, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X7.append(value[13])
+    # print(X7)
+    #
+    # path9='./res/1179_results.csv'
+    # filename9 = path9
+    # X9 = []
+    # with open(filename9, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X9.append(value[13])
+    # print(X9)
+
+    plt.plot(X1, color='yellow', label='IID', linestyle=':', marker = 'o', markersize = 2)
+    plt.plot(X2, color='black', label='Reduce-class',linestyle=':', marker = 'o', markersize = 2)
+    plt.plot(X3, color='brown', label='Reduce-class-plus',linestyle=':', marker = 'o', markersize = 2)
+    # plt.plot(X4, color='skyblue', label='Reduce-class-only',linestyle=':', marker = 'o', markersize = 2)
+    # plt.plot(X5, color='orange', label='Reduce-class-must',linestyle=':', marker = 'o', markersize = 2)
+    # plt.plot(X6, color='purple', label='Reduce-class-mustp',linestyle=':', marker = 'o', markersize = 2)
+
 if __name__ =='__main__':
     # plt_txt()
     # plt_acc()
     # plt_class_recall_1()
 
-    path1 = './res/1244_results.csv'
+    path1 = './res/1262_results.csv'
     filename1 = path1
     X1 = []
     with open(filename1, 'r') as f:
@@ -247,7 +354,7 @@ if __name__ =='__main__':
             value = [float(s) for s in line.split(',')]
             X1.append(value[0])
 
-    path2 = './res/1243_results.csv'
+    path2 = './res/1263_results.csv'
     filename2 = path2
     X2 = []
     with open(filename2, 'r') as f:

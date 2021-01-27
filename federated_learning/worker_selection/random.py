@@ -4,6 +4,8 @@ import math
 from scipy.stats import wasserstein_distance
 import numpy as np
 import heapq
+import torch
+from kmeans_pytorch import kmeans
 from federated_learning.utils.tensor_converter import convert_distributed_data_into_numpy
 
 class RandomSelectionStrategy(SelectionStrategy):
@@ -18,6 +20,8 @@ class RandomSelectionStrategy(SelectionStrategy):
     def select_round_workers_minus_1(self, workers, poisoned_workers, kwargs):
         return random.sample(workers, kwargs["NUM_WORKERS_PER_ROUND"]-1)
 
+    def select_round_workers_minus_2(self, workers, poisoned_workers, kwargs):
+        return random.sample(workers, kwargs["NUM_WORKERS_PER_ROUND"]-2)
 
     def select_round_workers_except_49(self, workers, poisoned_workers, kwargs):
         workers.remove(49)
@@ -94,4 +98,42 @@ class RandomSelectionStrategy(SelectionStrategy):
         num_round_workers  = kwargs["NUM_WORKERS_PER_ROUND"]
         choosed_workers = self.a_Reservoir(probability.tolist(), num_round_workers)
         return choosed_workers
+
+
+    def select_round_workers_actvSAMP(self, workers, poisoned_workers,clients, kwargs):
+        clients_distribution = []
+        for client_idx in range(len(clients)):
+            _client_distribution = clients[client_idx].get_client_distribution()
+            clients_distribution.append(_client_distribution)
+        data_size, dims, num_clusters = len(clients), len(clients_distribution[0]), kwargs["NUM_WORKERS_PER_ROUND"]
+        clients_distribution = torch.from_numpy(np.array(clients_distribution))
+        cluster_ids_x, cluster_centers = kmeans(
+        X = clients_distribution, num_clusters = num_clusters, distance = 'euclidean')
+
+        clusters = []
+        for cluster_name in range(num_clusters):
+            _cluster = []
+            _cluster.extend([i for i in range(len(cluster_ids_x)) if cluster_ids_x[i] == cluster_name])
+            clusters.append(_cluster)
+
+        choosed_workers = []
+        for cluster in clusters:
+            choosed_workers.append((random.sample(cluster,1))[0])
+        print(choosed_workers)
+        return choosed_workers
+
+    def select_round_workers_TiFL(self, workers, poisoned_workers,clients, accs,  kwargs):
+
+        probability = [-i for i in accs]
+        print (probability)
+
+        num_round_workers  = kwargs["NUM_WORKERS_PER_ROUND"]
+        choosed_workers = self.a_Reservoir(probability, num_round_workers)
+        print(choosed_workers)
+        return choosed_workers
+
+
+
+
+
 

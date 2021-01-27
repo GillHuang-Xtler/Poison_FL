@@ -105,14 +105,14 @@ def distribute_batches_reduce_2_plus(train_data_loader, num_workers):
 
     for batch_idx, (data, target) in enumerate(train_data_loader):
         worker_idx = batch_idx % num_workers
-        reduce0 = (target !=0 ).nonzero()
+        reduce0 = (target !=0 ).nonzero().cpu().detach().numpy().tolist()
         plus0 = (target == 0).nonzero()
+        reduce1 = (target !=1 ).nonzero().cpu().detach().numpy().tolist()
         plus1 = (target == 1).nonzero()
-        reduce1 = (target !=1 ).nonzero()
-        target_r0 = torch.index_select(target, 0, reduce0.view(-1))
-        data_r0 = torch.index_select(data, 0, reduce0.view(-1))
-        target_r = torch.index_select(target_r0, 0, reduce1.view(-1))
-        data_r = torch.index_select(data_r0, 0, reduce1.view(-1))
+        tmp = [val for val in reduce1 if val in reduce0]
+        reduce = torch.LongTensor(tmp)
+        target_r = torch.index_select(target, 0, reduce.view(-1))
+        data_r = torch.index_select(data, 0, reduce.view(-1))
         distributed_dataset[worker_idx].append((data_r, target_r))
         target_p0 = torch.index_select(target, 0, plus0.view(-1))
         data_p0 = torch.index_select(data, 0, plus0.view(-1))
@@ -136,18 +136,17 @@ def distribute_batches_reduce_3_plus(train_data_loader, num_workers):
 
     for batch_idx, (data, target) in enumerate(train_data_loader):
         worker_idx = batch_idx % num_workers
-        reduce0 = (target !=0 ).nonzero()
+        reduce0 = (target !=0 ).nonzero().cpu().detach().numpy().tolist()
         plus0 = (target == 0).nonzero()
         plus1 = (target == 1).nonzero()
-        reduce1 = (target !=1 ).nonzero()
-        reduce2 = (target !=2 ).nonzero()
+        reduce1 = (target !=1 ).nonzero().cpu().detach().numpy().tolist()
+        reduce2 = (target !=2 ).nonzero().cpu().detach().numpy().tolist()
         plus2 = (target == 2).nonzero()
-        target_r0 = torch.index_select(target, 0, reduce0.view(-1))
-        data_r0 = torch.index_select(data, 0, reduce0.view(-1))
-        target_r1 = torch.index_select(target_r0, 0, reduce1.view(-1))
-        data_r1 = torch.index_select(data_r0, 0, reduce1.view(-1))
-        target_r = torch.index_select(target_r1, 0, reduce2.view(-1))
-        data_r = torch.index_select(data_r1, 0, reduce2.view(-1))
+        _tmp = [val for val in reduce1 if val in reduce0]
+        tmp = [val for val in _tmp if val in reduce2]
+        reduce = torch.LongTensor(tmp)
+        target_r = torch.index_select(target, 0, reduce.view(-1))
+        data_r = torch.index_select(data, 0, reduce.view(-1))
         distributed_dataset[worker_idx].append((data_r, target_r))
         target_p0 = torch.index_select(target, 0, plus0.view(-1))
         data_p0 = torch.index_select(data, 0, plus0.view(-1))
