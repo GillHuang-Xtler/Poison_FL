@@ -190,14 +190,14 @@ def train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs):
 
 
     args.get_logger().info("Averaging client parameters")
-    # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
     for client_idx in random_workers:
         accs[client_idx] = clients[client_idx].local_test()
 
-    parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
-    sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
-    # new_nn_params = average_nn_parameters(parameters)
-    new_nn_params = fed_average_nn_parameters(parameters, sizes)
+    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    new_nn_params = average_nn_parameters(parameters)
+    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
 
     if args.contribution_measurement_metric == 'None':
         for client in clients:
@@ -304,7 +304,8 @@ def run_machine_learning(clients, args, poisoned_workers):
     accs = np.random.rand(50)
 
     for epoch in range(1, args.get_num_epochs() + 1):
-        results, workers_selected = train_subset_of_clients_fedfast(epoch, args, clients, poisoned_workers, current_distribution )
+        # results, workers_selected = train_subset_of_clients_fedfast(epoch, args, clients, poisoned_workers, current_distribution )
+        results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
         _selected_distribution = [clients[idx].get_client_distribution() for idx in workers_selected]
         selected_distribution = np.sum([i for i in _selected_distribution], axis = 0)
         current_distribution = [current_distribution[i]+selected_distribution[i] for i in range(len(current_distribution))]

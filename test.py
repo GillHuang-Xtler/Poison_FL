@@ -1,4 +1,4 @@
-path1 = './res/1253_results.csv'
+path1 = './res/1281_results.csv'
 filename1 = path1
 X1 = []
 with open(filename1, 'r') as f:
@@ -7,7 +7,7 @@ with open(filename1, 'r') as f:
         value = [float(s) for s in line.split(',')]
         X1.append(value[0])
 
-max_acc = 80
+max_acc = 75
 max40 = max_acc * 0.7
 max60 = max_acc * 0.8
 max80 = max_acc * 0.9
