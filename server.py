@@ -193,11 +193,11 @@ def train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs):
     for client_idx in random_workers:
         accs[client_idx] = clients[client_idx].local_test()
 
-    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
-    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
-    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
-    new_nn_params = average_nn_parameters(parameters)
-    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
+    # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    # new_nn_params = average_nn_parameters(parameters)
+    new_nn_params = fed_average_nn_parameters(parameters, sizes)
 
     if args.contribution_measurement_metric == 'None':
         for client in clients:
@@ -338,8 +338,8 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
     # distributed_train_dataset = distribute_batches_reduce_1(train_data_loader, args.get_num_workers())
-    # distributed_train_dataset = distribute_batches_reduce_2_plus(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_2_plus(train_data_loader, args.get_num_workers())
+    # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
     poisoned_workers = identify_random_elements(args.get_num_workers(), args.get_num_poisoned_workers())

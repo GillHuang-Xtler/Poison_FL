@@ -127,9 +127,6 @@ def plt_acc():
     # plt.plot(X10, color='gray', label='Reduce-class-introo')
 
 
-
-
-
     plt.legend()
     plt.xlabel('GLOBAL ROUNDS')
     plt.ylabel('ACCURACY')
@@ -340,6 +337,20 @@ def nun_maverick():
     # plt.plot(X5, color='orange', label='Reduce-class-must',linestyle=':', marker = 'o', markersize = 2)
     # plt.plot(X6, color='purple', label='Reduce-class-mustp',linestyle=':', marker = 'o', markersize = 2)
 
+def plt_utility():
+    path1 = './res/1262_results.csv'
+    filename1 = path1
+    X1, Y1 = [], [0.6]
+    with open(filename1, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X1.append(value[0])
+            Y1.append(value[1]/value[2])
+    plt.bar(X1,  Y1)
+    plt.show()
+
+
 if __name__ =='__main__':
     # plt_txt()
     # plt_acc()
@@ -362,24 +373,3 @@ if __name__ =='__main__':
         for line in lines:
             value = [float(s) for s in line.split(',')]
             X2.append(value[0])
-    #
-    # path2 = './res/cifarShapley.txt'
-    # filename2 = path2
-    # X2 , Y2= [], []
-    # with open(filename2, 'r') as f:
-    #     lines = f.readlines()
-    #     for line in lines:
-    #         value = [float(s) for s in line.split()]
-    #         X2.append(value[0])
-    #         Y2.append(value[1]/value[2]*200+10)
-    #         print(X2, Y2)
-    #
-    #
-    # plt.plot(X1, Y1, color='purple', label='Reduce-class-plus',linestyle=':', marker = 'o', markersize = 2 )
-    # plt.plot(X2, Y2, color = 'purple', linestyle=':', marker = 'o', markersize = 2)
-    print(X1, X2)
-    plt.plot(X1, color = 'brown')
-    plt.plot(X2, color = 'blue')
-
-    # plt.ylim(40,100)
-    plt.show()
