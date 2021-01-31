@@ -338,38 +338,55 @@ def nun_maverick():
     # plt.plot(X6, color='purple', label='Reduce-class-mustp',linestyle=':', marker = 'o', markersize = 2)
 
 def plt_utility():
-    path1 = './res/1262_results.csv'
+    path1 = './shapley-cifar.txt'
     filename1 = path1
-    X1, Y1 = [], [0.6]
+    X1, Y1 = [0], [1]
     with open(filename1, 'r') as f:
         lines = f.readlines()
         for line in lines:
             value = [float(s) for s in line.split(',')]
             X1.append(value[0])
-            Y1.append(value[1]/value[2])
-    plt.bar(X1,  Y1)
-    plt.show()
+            Y1.append(1-((abs(value[1]/value[6]-0.1)+abs(value[2]/value[6]-0.1)+abs(value[3]/value[6]-0.1)+abs(value[4]/value[6]-0.1)+abs(value[5]/value[6]-0.6))))
+    X2 = ['REF', 'AVG']
+    Y2 = [1, sum(Y1[1:])/(len(Y1)-1)]
 
+    grid = plt.GridSpec(1, 4)
+    plt.subplot(grid[0,0:3])
+    plt.bar(X1[0],  Y1[0], color = 'r', width=4)
+    plt.bar(X1[1:], Y1[1:], color = 'b', width=4)
+    plt.plot(X1[1:], Y1[1:], color = 'g',marker = 'o', markersize = 4)
+    plt.legend()
+    plt.xlabel('GLOBAL ROUNDS')
+    plt.ylabel('FAIRNESS UTILITY')
+    plt.subplot(grid[0,3])
+    plt.bar(X2[0], Y2[0], color = 'r', width=0.5)
+    plt.bar(X2[1], Y2[1], color = 'b', width=0.5)
+    plt.legend()
+    # plt.xlabel('GLOBAL ROUNDS')
+    plt.tight_layout()
+    plt.show()
+    # print(X1, Y1)
 
 if __name__ =='__main__':
     # plt_txt()
     # plt_acc()
     # plt_class_recall_1()
+    plt_utility()
 
-    path1 = './res/1262_results.csv'
-    filename1 = path1
-    X1 = []
-    with open(filename1, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            value = [float(s) for s in line.split(',')]
-            X1.append(value[0])
-
-    path2 = './res/1263_results.csv'
-    filename2 = path2
-    X2 = []
-    with open(filename2, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            value = [float(s) for s in line.split(',')]
-            X2.append(value[0])
+    # path1 = './res/1262_results.csv'
+    # filename1 = path1
+    # X1 = []
+    # with open(filename1, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X1.append(value[0])
+    #
+    # path2 = './res/1263_results.csv'
+    # filename2 = path2
+    # X2 = []
+    # with open(filename2, 'r') as f:
+    #     lines = f.readlines()
+    #     for line in lines:
+    #         value = [float(s) for s in line.split(',')]
+    #         X2.append(value[0])

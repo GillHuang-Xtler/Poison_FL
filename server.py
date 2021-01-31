@@ -338,7 +338,7 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
     # distributed_train_dataset = distribute_batches_reduce_1(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_2_plus(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_3_plus(train_data_loader, args.get_num_workers())
     # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
