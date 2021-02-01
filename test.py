@@ -158,7 +158,7 @@
 #         res.append(i)
 #         cnt+=1
 # print(cnt,res)
-path1 = './res/2283_results.csv'
+path1 = './res/1253_results.csv'
 filename1 = path1
 X1 = []
 with open(filename1, 'r') as f:
@@ -167,10 +167,10 @@ with open(filename1, 'r') as f:
         value = [float(s) for s in line.split(',')]
         X1.append(value[0])
 
-max_acc = 90.37
+max_acc = 100
 print(max_acc)
-max60 = max_acc * 0.97
-max80 = max_acc * 0.99
+max60 = max_acc * 0.68
+max80 = max_acc * 0.7
 
 res4 = []
 res6 = []
@@ -180,4 +180,6 @@ for i in range(len(X1)):
         res6.append(i)
     if X1[i] > max80:
         res8.append(i)
+if len(res8) == 0:
+    res8.append(0)
 print( [res6[0], res8[0]])

@@ -315,11 +315,11 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers, current_dist
         clients[client_idx].train(epoch)
 
     args.get_logger().info("Averaging client parameters")
-    # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
-    parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
-    sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
-    new_nn_params = fed_average_nn_parameters(parameters, sizes)
-    # new_nn_params = average_nn_parameters(parameters)
+    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
+    new_nn_params = average_nn_parameters(parameters)
 
     if args.contribution_measurement_metric == 'None':
         for client in clients:
@@ -381,9 +381,9 @@ def run_machine_learning(clients, args, poisoned_workers):
     _tmp2 = [1,0,1,1,1,1,1,1,1,1]
 
     for epoch in range(1, args.get_num_epochs() + 1):
-        results, workers_selected, current_probability = train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability)
+        # results, workers_selected, current_probability = train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability)
         # results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
-        # results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
+        results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
         # results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
         if 49 in workers_selected:
             _current_distribution = [i*(epoch)*100 for i in current_distribution]
