@@ -16,7 +16,6 @@ class RandomSelectionStrategy(SelectionStrategy):
     def select_round_workers(self, workers, poisoned_workers, kwargs):
         return random.sample(workers, kwargs["NUM_WORKERS_PER_ROUND"])
 
-
     def select_round_workers_minus_1(self, workers, poisoned_workers, kwargs):
         return random.sample(workers, kwargs["NUM_WORKERS_PER_ROUND"]-1)
 
@@ -39,6 +38,10 @@ class RandomSelectionStrategy(SelectionStrategy):
         R = random.random()
         return math.pow(R, 1 / weight)
 
+    def norm(self, dis):
+        a = dis[0] / 100
+        return [i / (100 * a) for i in dis]
+
     def a_Reservoir(self, samples, m):
         """
         :samples: [(item, weight), ...]
@@ -49,7 +52,8 @@ class RandomSelectionStrategy(SelectionStrategy):
         heap = []
         for sample in samples:
             wi = sample
-            ui = random.uniform(0, 1)
+            # ui = random.uniform(0, 1)
+            ui = np.random.rand(1)
             ki = ui ** (1 / wi)
 
             if len(heap) < m:
@@ -62,7 +66,8 @@ class RandomSelectionStrategy(SelectionStrategy):
 
         return [samples.index(item[1]) for item in heap]
 
-    def compute_probability(self, global_distribution, current_distribution, client_distribution):
+
+    def compute_probability1(self, global_distribution, current_distribution, client_distribution):
         alpha = 0.1
         EMDG = []
         for i in client_distribution:
@@ -79,26 +84,53 @@ class RandomSelectionStrategy(SelectionStrategy):
         _emd = []
 
         for i in range(len(client_distribution)):
-            _emd.append((alpha * EMDG[i] - EMDC[i]))
+            _emd.append((-alpha * EMDG[i] + EMDC[i]))
 
         return self.softmax(_emd)
 
-    def select_round_workers_distribution(self, workers, poisoned_workers,clients, current_distribution, kwargs):
+    def compute_probability(self, global_distribution, current_distribution, client_distribution, epoch):
+        alpha = 1
+        EMDG = []
+        for i in client_distribution:
+            EMDG.append(self.compute_wasserstein_distance(global_distribution, i))
+        # EMDG = [(i - min(EMDG)) / (max(EMDG) - min(EMDG)) for i in EMDG]
+
+        #
+        EMDC = []
+        for i in client_distribution:
+            EMDC.append(self.compute_wasserstein_distance([m for m in current_distribution], [j for j in i]))
+        # EMDC = [(i - min(EMDC)) / (max(EMDC) - min(EMDC)) for i in EMDC]
+        # EMDC = [i / 1 for i in EMDC]
+
+        # print(EMDG)
+        _emd = []
+        # print(EMDC)
+        for i in range(len(client_distribution)):
+            _emd.append((0.15 * EMDG[i] - 0.0015 * epoch * EMDC[i]))
+            # _emd.append(EMDC[i]/10)
+
+        return self.softmax(_emd)
+
+    def select_round_workers_distribution(self, workers, poisoned_workers,clients, current_distribution, kwargs,epoch):
         client_distribution = []
-        global_distribution = [6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000]
+        global_distribution=np.ones(10)
         for client_idx in range(len(clients)):
             _client_distribution = clients[client_idx].get_client_distribution()
-            global_distribution = [global_distribution[i]+_client_distribution[i] for i in range(len(_client_distribution))]
             client_distribution.append(_client_distribution)
+        client_distribution = [self.norm(i) for i in client_distribution]
 
-        print('current_distribution:'+ str(current_distribution))
-        probability = self.compute_probability(global_distribution, current_distribution, client_distribution)
+        probability = self.compute_probability(global_distribution, current_distribution, client_distribution, epoch)
         print("probability"+ str(probability))
 
         num_round_workers  = kwargs["NUM_WORKERS_PER_ROUND"]
         choosed_workers = self.a_Reservoir(probability.tolist(), num_round_workers)
         return choosed_workers
 
+    def select_round_workers_sv(self, workers, poisoned_workers,clients, current_probability, kwargs):
+
+        num_round_workers  = kwargs["NUM_WORKERS_PER_ROUND"]
+        choosed_workers = self.a_Reservoir(current_probability.tolist(), num_round_workers)
+        return choosed_workers
 
     def select_round_workers_actvSAMP(self, workers, poisoned_workers,clients, kwargs):
         clients_distribution = []
@@ -119,7 +151,6 @@ class RandomSelectionStrategy(SelectionStrategy):
         choosed_workers = []
         for cluster in clusters:
             choosed_workers.append((random.sample(cluster,1))[0])
-        print(choosed_workers)
         return choosed_workers
 
     def select_round_workers_TiFL(self, workers, poisoned_workers,clients, accs,  kwargs):

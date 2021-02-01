@@ -19,6 +19,12 @@ import contribution_evaluation
 import copy
 import plot
 import numpy as np
+from federated_learning.worker_selection.random import RandomSelectionStrategy
+
+
+def norm(dis):
+    a = dis[0] / 100
+    return [i / (100 * a) for i in dis]
 
 
 def train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution):
@@ -37,37 +43,37 @@ def train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_
     kwargs = args.get_round_worker_selection_strategy_kwargs()
     kwargs["current_epoch_number"] = epoch
 
-    if epoch <100 :
+    if epoch <0 :
         random_workers = args.get_round_worker_selection_strategy().select_round_workers(
             list(range(args.get_num_workers())),
             poisoned_workers,
             kwargs)
-    elif epoch in [105,125,145,165,195]:
-        random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
-            list(range(args.get_num_workers())),
-            poisoned_workers,
-            kwargs)
-        random_workers.append(49)
+    # elif epoch in [105,125,145,165,195]:
+    #     random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
+    #         list(range(args.get_num_workers())),
+    #         poisoned_workers,
+    #         kwargs)
+    #     random_workers.append(49)
 
-    elif epoch in [100, 120, 140, 160, 190]:
-        random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
-            list(range(args.get_num_workers())),
-            poisoned_workers,
-            kwargs)
-        random_workers.append(48)
-
-    elif epoch in [110, 130, 150, 170, 200]:
-        random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
-            list(range(args.get_num_workers())),
-            poisoned_workers,
-            kwargs)
-        random_workers.append(47)
+    # elif epoch in [100, 120, 140, 160, 190]:
+    #     random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
+    #         list(range(args.get_num_workers())),
+    #         poisoned_workers,
+    #         kwargs)
+    #     random_workers.append(48)
+    #
+    # elif epoch in [110, 130, 150, 170, 200]:
+    #     random_workers = args.get_round_worker_selection_strategy().select_round_workers_minus_1(
+    #         list(range(args.get_num_workers())),
+    #         poisoned_workers,
+    #         kwargs)
+    #     random_workers.append(47)
 
     else:
         random_workers = args.get_round_worker_selection_strategy().select_round_workers_distribution(
             list(range(args.get_num_workers())),
             poisoned_workers, clients, current_distribution,
-            kwargs)
+            kwargs,epoch)
 
     for client_idx in random_workers:
         args.get_logger().info("Training epoch #{} on client #{}", str(epoch),
@@ -76,11 +82,11 @@ def train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_
 
 
     args.get_logger().info("Averaging client parameters")
-    # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
-    parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
-    sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
-    # new_nn_params = average_nn_parameters(parameters)
-    new_nn_params = fed_average_nn_parameters(parameters, sizes)
+    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    new_nn_params = average_nn_parameters(parameters)
+    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
 
     if args.contribution_measurement_metric == 'None':
         for client in clients:
@@ -193,6 +199,52 @@ def train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs):
     for client_idx in random_workers:
         accs[client_idx] = clients[client_idx].local_test()
 
+    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    new_nn_params = average_nn_parameters(parameters)
+    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
+
+    if args.contribution_measurement_metric == 'None':
+        for client in clients:
+            args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+            client.update_nn_parameters(new_nn_params)
+
+    results = (clients[0].test())
+
+    return results, random_workers, accs
+
+def train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability):
+    """
+    Train a subset of clients per round.
+
+    :param epoch: epoch
+    :type epoch: int
+    :param args: arguments
+    :type args: Arguments
+    :param clients: clients
+    :type clients: list(Client)
+    :param poisoned_workers: indices of poisoned workers
+    :type poisoned_workers: list(int)
+    """
+
+    current_probability = 0.02+0.001*np.random.rand(50)
+    current_probability[49] = 0.005
+
+    kwargs = args.get_round_worker_selection_strategy_kwargs()
+    kwargs["current_epoch_number"] = epoch
+
+    random_workers = args.get_round_worker_selection_strategy().select_round_workers_sv(
+        list(range(args.get_num_workers())),
+        poisoned_workers, clients, current_probability,
+        kwargs)
+
+    for client_idx in random_workers:
+        args.get_logger().info("Training epoch #{} on client #{}", str(epoch),
+                               str(clients[client_idx].get_client_index()))
+        clients[client_idx].train(epoch)
+
+    args.get_logger().info("Averaging client parameters")
     # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
     parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
     sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
@@ -204,9 +256,30 @@ def train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs):
             args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
             client.update_nn_parameters(new_nn_params)
 
-    results = (clients[0].test())
 
-    return results, random_workers, accs
+    # elif args.contribution_measurement_metric == 'Shapley' and 49 in random_workers:
+    #     shapley_acc, shapley_loss = contribution_evaluation.calculate_shapley_values(args, clients, random_workers, epoch)
+    #     args.get_logger().info("Shapley on clients: by acc: #{}, by loss: #{} on selected #{}, C_imb making up #{}", str(shapley_acc), str(shapley_loss), str(random_workers), str(sum(shapley_loss)))
+    #
+    #     for client in clients:
+    #         args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+    #         client.update_nn_parameters(new_nn_params)
+    #
+    #     _selected_probability = [i/sum(shapley_loss) for i in shapley_loss]
+    #     selected_proba_dict = dict(zip(random_workers, _selected_probability))
+    #     for worker in selected_proba_dict.keys():
+    #         current_probability[worker] = selected_proba_dict[worker]
+    #
+    # else:
+    #     for client in clients:
+    #         args.get_logger().info("Updating parameters on client #{}", str(client.get_client_index()))
+    #         client.update_nn_parameters(new_nn_params)
+    #     current_probability = (0.3*np.random.rand(50)).tolist()
+
+    print(current_probability)
+    results = (clients[0].test())
+    return results, random_workers, current_probability
+
 
 def train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution):
     """
@@ -300,19 +373,32 @@ def run_machine_learning(clients, args, poisoned_workers):
     """
     epoch_test_set_results = []
     worker_selection = []
-    current_distribution = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    current_distribution = np.ones(10)
+    current_distribution[1] = 50
     accs = np.random.rand(50)
+    current_probability = (0.3*np.random.rand(50)).tolist()
+    _tmp1 = [1,50,1,1,1,1,1,1,1,1]
+    _tmp2 = [1,0,1,1,1,1,1,1,1,1]
 
     for epoch in range(1, args.get_num_epochs() + 1):
-        # results, workers_selected = train_subset_of_clients_fedfast(epoch, args, clients, poisoned_workers, current_distribution )
-        results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
-        _selected_distribution = [clients[idx].get_client_distribution() for idx in workers_selected]
-        selected_distribution = np.sum([i for i in _selected_distribution], axis = 0)
-        current_distribution = [current_distribution[i]+selected_distribution[i] for i in range(len(current_distribution))]
-        # results, workers_selected = train_subset_of_clients_inc_49(epoch, args, clients, poisoned_workers)
+        results, workers_selected, current_probability = train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability)
+        # results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
+        # results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
+        # results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
+        if 49 in workers_selected:
+            _current_distribution = [i*(epoch)*100 for i in current_distribution]
+            _current_distribution = [_current_distribution[i]+_tmp1[i]*100 for i in range(10)]
+            current_distribution = norm(_current_distribution)
+        else:
+            _current_distribution = [i*(epoch)*100 for i in current_distribution]
+            _current_distribution = [_current_distribution[i]+_tmp2[i]*100 for i in range(10)]
+            current_distribution = norm(_current_distribution)
+        print('current_distribution:'+ str(current_distribution))
+        # _selected_distribution = [clients[idx].get_client_distribution() for idx in workers_selected]
+        # selected_distribution = np.sum([i for i in _selected_distribution], axis = 0)
+        # current_distribution = [current_distribution[i]+selected_distribution[i] for i in range(len(current_distribution))]
         # torch.cuda.synchronize()
         epoch_test_set_results.append(results)
-        # epoch_test_set_results.append(shapley)
         worker_selection.append(workers_selected)
 
     return convert_results_to_csv(epoch_test_set_results), worker_selection
@@ -338,7 +424,7 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
     # distributed_train_dataset = distribute_batches_reduce_1(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_3_plus(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
     # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
