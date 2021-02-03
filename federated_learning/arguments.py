@@ -20,19 +20,19 @@ class Arguments:
     def __init__(self, logger):
         self.logger = logger
 
-        self.batch_size = 10
+        self.batch_size = 4
         self.test_batch_size = 1000
         self.epochs = 200
-        self.lr = 0.01
-        self.momentum = 0.5
+        self.lr = 0.001
+        self.momentum = 0.9
         self.cuda = False
         self.shuffle = False
         self.log_interval = 100
         self.kwargs = {}
         self.contribution_measurement_round = 150
-        self.contribution_measurement_metric = 'None'
-        self.scheduler_step_size = 50
-        self.scheduler_gamma = 0.5
+        self.contribution_measurement_metric = 'Shapley'
+        self.scheduler_step_size = 10
+        self.scheduler_gamma = 0.1
         self.min_lr = 1e-10
 
         self.round_worker_selection_strategy = None
@@ -48,18 +48,18 @@ class Arguments:
         self.num_workers = 50
         # self.num_poisoned_workers = 10
 
-        self.net = Cifar10CNN
+        # self.net = Cifar10CNN
         # self.net = Cifar10ResNet
-        # self.net = FashionMNISTCNN
+        self.net = FashionMNISTCNN
         # self.net = FashionMNISTResNet
         # self.net = Cifar100ResNet
         # self.net = Cifar100VGG
 
-        self.train_data_loader_pickle_path = "data_loaders/cifar10/train_data_loader.pickle"
-        self.test_data_loader_pickle_path = "data_loaders/cifar10/test_data_loader.pickle"
+        # self.train_data_loader_pickle_path = "data_loaders/cifar10/train_data_loader.pickle"
+        # self.test_data_loader_pickle_path = "data_loaders/cifar10/test_data_loader.pickle"
         #
-        # self.train_data_loader_pickle_path = "data_loaders/fashion-mnist/train_data_loader.pickle"
-        # self.test_data_loader_pickle_path = "data_loaders/fashion-mnist/test_data_loader.pickle"
+        self.train_data_loader_pickle_path = "data_loaders/fashion-mnist/train_data_loader.pickle"
+        self.test_data_loader_pickle_path = "data_loaders/fashion-mnist/test_data_loader.pickle"
 
         # self.train_data_loader_pickle_path = "data_loaders/cifar100/train_data_loader.pickle"
         # self.test_data_loader_pickle_path = "data_loaders/cifar100/test_data_loader.pickle"

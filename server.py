@@ -3,7 +3,7 @@ import torch
 import time
 from federated_learning.arguments import Arguments
 from federated_learning.utils import generate_data_loaders_from_distributed_dataset
-from federated_learning.datasets.data_distribution import distribute_batches_equally, distribute_batches_reduce_1,distribute_batches_reduce_1_plus, distribute_batches_reduce_2_plus, distribute_batches_reduce_3_plus
+from federated_learning.datasets.data_distribution import distribute_batches_equally, distribute_batches_reduce_1,distribute_batches_reduce_1_plus, distribute_batches_reduce_2_plusM,distribute_batches_reduce_2_plus, distribute_batches_reduce_3_plus
 from federated_learning.utils import average_nn_parameters, fed_average_nn_parameters
 from federated_learning.utils import average_nn_parameters
 from federated_learning.utils import convert_distributed_data_into_numpy
@@ -315,11 +315,11 @@ def train_subset_of_clients(epoch, args, clients, poisoned_workers, current_dist
         clients[client_idx].train(epoch)
 
     args.get_logger().info("Averaging client parameters")
-    parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
-    # parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
-    # sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
-    # new_nn_params = fed_average_nn_parameters(parameters, sizes)
-    new_nn_params = average_nn_parameters(parameters)
+    # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
+    parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
+    sizes = {client_idx: clients[client_idx].get_client_datasize() for client_idx in random_workers}
+    new_nn_params = fed_average_nn_parameters(parameters, sizes)
+    # new_nn_params = average_nn_parameters(parameters)
 
     if args.contribution_measurement_metric == 'None':
         for client in clients:
@@ -382,8 +382,9 @@ def run_machine_learning(clients, args, poisoned_workers):
 
     for epoch in range(1, args.get_num_epochs() + 1):
         # results, workers_selected, current_probability = train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability)
-        # results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
-        results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
+        # results, workers_selected = train_subset_of_clients_fedfast(epoch, args, clients, poisoned_workers, current_distribution)
+        # results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
+        results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
         # results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
         if 49 in workers_selected:
             _current_distribution = [i*(epoch)*100 for i in current_distribution]
@@ -423,9 +424,7 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
 
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
-    # distributed_train_dataset = distribute_batches_reduce_1(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
-    # distributed_train_dataset = distribute_batches_reduce_1_plus(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_2_plusM(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
     poisoned_workers = identify_random_elements(args.get_num_workers(), args.get_num_poisoned_workers())
