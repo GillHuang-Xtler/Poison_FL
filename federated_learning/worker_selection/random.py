@@ -39,8 +39,8 @@ class RandomSelectionStrategy(SelectionStrategy):
         return math.pow(R, 1 / weight)
 
     def norm(self, dis):
-        a = dis[0] / 100
-        return [i / (100 * a) for i in dis]
+        a = dis[0] / 120
+        return [i / (120 * a) for i in dis]
 
     def a_Reservoir(self, samples, m):
         """
@@ -106,7 +106,7 @@ class RandomSelectionStrategy(SelectionStrategy):
         _emd = []
         # print(EMDC)
         for i in range(len(client_distribution)):
-            _emd.append((0.105 * EMDG[i] - 0.0015 * epoch * EMDC[i]))
+            _emd.append((0.15 * EMDG[i] - 0.0015 * epoch * EMDC[i]))
             # _emd.append(EMDC[i]/10)
 
         return self.softmax(_emd)
