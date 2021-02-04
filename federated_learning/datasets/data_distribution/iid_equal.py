@@ -1,5 +1,5 @@
 import torch
-
+import random
 def distribute_batches_equally(train_data_loader, num_workers):
     """
     Gives each worker the same number of batches of training data.
@@ -111,9 +111,8 @@ def distribute_batches_reduce_3_plusM(train_data_loader, num_workers):
         distributed_dataset[worker_idx].append((data_r, target_r))
         target_p = torch.index_select(target, 0, plus.view(-1))
         data_p = torch.index_select(data, 0, plus.view(-1))
-        distributed_dataset[num_workers-1].append((data_p[0:(len(data_p)/3)], target_p[0:(len(data_p)/3)]))
-        distributed_dataset[num_workers-2].append((data_p[(len(data_p)/3):(len(data_p)*2/3)], target_p[(len(data_p)/3):(len(data_p)*2/3)]))
-        distributed_dataset[num_workers-3].append((data_p[(len(data_p)*2/3):], target_p[(len(data_p)*2/3):]))
+        rand_idx = random.randint(1, 3)
+        distributed_dataset[num_workers - rand_idx].append((data_p, target_p))
 
     return distributed_dataset
 
