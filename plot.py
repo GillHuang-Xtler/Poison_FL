@@ -477,26 +477,36 @@ if __name__ =='__main__':
     # plt_class_recall_1()
     # plt_utility()
     sub_plot()
-    # path1 = './res/1013_results.csv'
-    # filename1 = path1
-    # X1 = []
-    # with open(filename1, 'r') as f:
-    #     lines = f.readlines()
-    #     for line in lines:
-    #         value = [float(s) for s in line.split(',')]
-    #         X1.append(value[0])
-    #
-    # path2 = './res/1314_results.csv'
-    # filename2 = path2
-    # X2 = []
-    # with open(filename2, 'r') as f:
-    #     lines = f.readlines()
-    #     for line in lines:
-    #         value = [float(s) for s in line.split(',')]
-    #         X2.append(value[0])
-    #
-    # plt.plot(X1, color='blue', label='sv',linewidth = '1')
-    # plt.plot(X2, color='red', label='random', linewidth = '1')
+    path1 = './res/62111_results.csv'
+    filename1 = path1
+    X1 = []
+    with open(filename1, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X1.append(value[0])
+
+    path2 = './res/621_results.csv'
+    filename2 = path2
+    X2 = []
+    with open(filename2, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X2.append(value[0])
+
+    path3 = './res/1191_results.csv'
+    filename3 = path3
+    X3 = []
+    with open(filename3, 'r') as f:
+        lines = f.readlines()
+        for line in lines:
+            value = [float(s) for s in line.split(',')]
+            X3.append(value[0])
+    plt.plot(X1, color='blue', label='sv',linewidth = '1')
+    plt.plot(X2, color='red', label='random', linewidth = '1')
+    # plt.plot(X3, color='brown', label='random', linewidth = '1')
+
     # plt.xlabel('GLOBAL ROUNDS')
     # plt.ylabel('ACCURACY')
     # plt.ylim([30,75])

@@ -39,7 +39,7 @@ class RandomSelectionStrategy(SelectionStrategy):
         return math.pow(R, 1 / weight)
 
     def norm(self, dis):
-        a = dis[0] / 120
+        a = dis[9] / 120
         return [i / (120 * a) for i in dis]
 
     def a_Reservoir(self, samples, m):

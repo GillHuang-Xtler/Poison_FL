@@ -18,12 +18,13 @@ from client import Client
 import contribution_evaluation
 import copy
 import plot
+import random
 import numpy as np
 from federated_learning.worker_selection.random import RandomSelectionStrategy
 
 
 def norm(dis):
-    a = dis[0] / 120
+    a = dis[9] / 120
     return [i / (120 * a) for i in dis]
 
 
@@ -194,10 +195,14 @@ def train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs):
                                str(clients[client_idx].get_client_index()))
         clients[client_idx].train(epoch)
 
-
+    # out_workers = list(set(range(50)).difference(set(random_workers)))
+    # sel = []
     args.get_logger().info("Averaging client parameters")
     for client_idx in random_workers:
         accs[client_idx] = clients[client_idx].local_test()
+    #     sel.append(accs[client_idx])
+    # for client_idx in out_workers:
+    #     accs[client_idx] = sum(sel)/len(sel)+random.random()
 
     # parameters = [clients[client_idx].get_nn_parameters() for client_idx in random_workers]
     parameters = {client_idx: clients[client_idx].get_nn_parameters() for client_idx in random_workers}
@@ -383,8 +388,8 @@ def run_machine_learning(clients, args, poisoned_workers):
     for epoch in range(1, args.get_num_epochs() + 1):
         # results, workers_selected, current_probability = train_subset_of_clients_sv(epoch, args, clients, poisoned_workers, current_probability)
         # results, workers_selected = train_subset_of_clients_fedfast(epoch, args, clients, poisoned_workers, current_distribution)
-        # results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
-        results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
+        results, workers_selected = train_subset_of_clients_new(epoch, args, clients, poisoned_workers, current_distribution)
+        # results, workers_selected = train_subset_of_clients(epoch, args, clients, poisoned_workers, current_distribution)
         # results, workers_selected, accs = train_subset_of_clients_tifl(epoch, args, clients, poisoned_workers, accs)
         if 49 in workers_selected:
             _current_distribution = [i*(epoch)*120 for i in current_distribution]
@@ -424,7 +429,7 @@ def run_exp(replacement_method, num_poisoned_workers, KWARGS, client_selection_s
 
     # Distribute batches equal volume IID
     # distributed_train_dataset = distribute_batches_equally(train_data_loader, args.get_num_workers())
-    distributed_train_dataset = distribute_batches_reduce_3_plusM(train_data_loader, args.get_num_workers())
+    distributed_train_dataset = distribute_batches_reduce_3_plus(train_data_loader, args.get_num_workers())
     distributed_train_dataset = convert_distributed_data_into_numpy(distributed_train_dataset)
 
     poisoned_workers = identify_random_elements(args.get_num_workers(), args.get_num_poisoned_workers())
