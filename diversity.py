@@ -3,7 +3,7 @@ from federated_learning.worker_selection import RandomSelectionStrategy
 from server import run_exp
 
 if __name__ == '__main__':
-    for idx in [6214]:
+    for idx in [28815]:
         START_EXP_IDX = idx
         NUM_EXP = 1
         NUM_POISONED_WORKERS = 0

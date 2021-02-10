@@ -476,8 +476,8 @@ if __name__ =='__main__':
     # plt_acc()
     # plt_class_recall_1()
     # plt_utility()
-    sub_plot()
-    path1 = './res/62111_results.csv'
+    # sub_plot()
+    path1 = './res/2881_results.csv'
     filename1 = path1
     X1 = []
     with open(filename1, 'r') as f:
@@ -485,8 +485,7 @@ if __name__ =='__main__':
         for line in lines:
             value = [float(s) for s in line.split(',')]
             X1.append(value[0])
-
-    path2 = './res/621_results.csv'
+    path2 = './res/2881_results.csv'
     filename2 = path2
     X2 = []
     with open(filename2, 'r') as f:
@@ -495,7 +494,7 @@ if __name__ =='__main__':
             value = [float(s) for s in line.split(',')]
             X2.append(value[0])
 
-    path3 = './res/1191_results.csv'
+    path3 = './res/1171_results.csv'
     filename3 = path3
     X3 = []
     with open(filename3, 'r') as f:
@@ -503,12 +502,14 @@ if __name__ =='__main__':
         for line in lines:
             value = [float(s) for s in line.split(',')]
             X3.append(value[0])
-    plt.plot(X1, color='blue', label='sv',linewidth = '1')
-    plt.plot(X2, color='red', label='random', linewidth = '1')
-    # plt.plot(X3, color='brown', label='random', linewidth = '1')
 
-    # plt.xlabel('GLOBAL ROUNDS')
-    # plt.ylabel('ACCURACY')
-    # plt.ylim([30,75])
-    # plt.legend()
-    # plt.show()
+
+    # plt.plot(X1, color='brown', label='avg', linewidth = '1')
+    plt.plot(X2, color='blue', label='het', linewidth = '1')
+    plt.plot(X3, color='green', label='iid', linewidth = '1')
+
+    plt.xlabel('GLOBAL ROUNDS')
+    plt.ylabel('ACCURACY')
+    # plt.ylim([60,95])
+    plt.legend()
+    plt.show()

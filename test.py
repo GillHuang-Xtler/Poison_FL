@@ -4,7 +4,10 @@ import random
 import heapq
 from kmeans_pytorch import kmeans
 import torch
-
+import csv
+import json
+import os
+from federated_learning.utils import save_results
 def norm1(dis):
     min_dis = 6000
     for i in dis:
@@ -86,8 +89,8 @@ client_distribution = [[97, 0, 97, 82, 110, 107, 97, 105, 94, 112]
 ,[98, 0, 106, 94, 108, 96, 102, 101, 97, 102]
 ,[113, 0, 108, 103, 95, 112, 91, 86, 108, 93]
 ,[97, 0, 102, 103, 104, 101, 104, 87, 108, 100]
-,[100, 2000, 108, 96, 92, 105, 118, 95, 102, 91]
-,[81, 3000, 92, 102, 93, 104, 98, 114, 89, 128]]
+,[100, 0, 108, 96, 92, 105, 118, 95, 102, 91]
+,[81, 5000, 92, 102, 93, 104, 98, 114, 89, 128]]
 # client_distribution = [[111, 0, 104, 109, 137, 96, 127, 130, 134, 121],
 #                         [106, 0, 139, 129, 127, 131, 102, 116, 108, 118],
 #                         [108, 0, 137, 118, 113, 111, 121, 117, 128, 128],
@@ -167,7 +170,7 @@ def compute_probability(global_distribution, current_distribution, client_distri
     _emd = []
     # print(EMDC)
     for i in range(len(client_distribution)):
-        _emd.append((0.15 * EMDG[i] - 0.0014*epoch*EMDC[i]))
+        _emd.append((0.11 * EMDG[i] - 0.001*epoch*EMDC[i]))
         # _emd.append(EMDC[i]/10)
 
     return softmax(_emd)
@@ -196,7 +199,7 @@ def select(client_distribution):
     return selected_workers
 
 # client_distribution = [norm(i) for i in client_distribution]
-#
+# #
 # print(select(client_distribution))
 # # _tmp1 = [1,50,1,1,1,1,1,1,1,1]
 # # _tmp2 = [1,3,1,1,1,1,1,1,1,1]
@@ -209,7 +212,7 @@ def select(client_distribution):
 #         res.append(i)
 #         cnt+=1
 # print(cnt,res)
-path1 = './res/6214_results.csv'
+path1 = './res/12531_results.csv'
 filename1 = path1
 X1 = []
 with open(filename1, 'r') as f:
@@ -217,8 +220,7 @@ with open(filename1, 'r') as f:
     for line in lines:
         value = [float(s) for s in line.split(',')]
         X1.append(value[0])
-
-max_acc = 86.1
+max_acc =70.24
 print(max_acc)
 max60 = max_acc * 0.87
 max80 = max_acc * 0.99
