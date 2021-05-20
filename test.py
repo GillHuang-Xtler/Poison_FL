@@ -212,7 +212,7 @@ def select(client_distribution):
 #         res.append(i)
 #         cnt+=1
 # print(cnt,res)
-path1 = './res/12531_results.csv'
+path1 = './res/5203_results.csv'
 filename1 = path1
 X1 = []
 with open(filename1, 'r') as f:
@@ -220,7 +220,7 @@ with open(filename1, 'r') as f:
     for line in lines:
         value = [float(s) for s in line.split(',')]
         X1.append(value[0])
-max_acc =70.24
+max_acc =90.37
 print(max_acc)
 max60 = max_acc * 0.87
 max80 = max_acc * 0.99

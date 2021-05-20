@@ -10,3 +10,7 @@ Poisoners for label flipping and backdooring. It is now ready for label flipping
 
 - The arguments are in 'arguments.py' + label_flipping_attack.py.
 - The traning round (epoch in this repository) should be set to 200.
+
+
+5201 5202 5203: fashion-maverick-1-fedprox-mu0.01
+5204 5205 5206: cifar-maverick-1-fedprox-mu0.01

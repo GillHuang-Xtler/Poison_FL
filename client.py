@@ -40,6 +40,9 @@ class Client:
 
         self.distributed_train_dataset = distributed_train_dataset
 
+        # for fedprox
+        self.new_params = None
+
     def initialize_device(self):
         """
         Creates appropriate torch device for client operation.
@@ -117,6 +120,9 @@ class Client:
         """
         self.net.load_state_dict(copy.deepcopy(new_params), strict=True)
 
+        # for fedprox
+        self.new_params = new_params
+
     def get_client_distribution(self):
         label_class_set = {0,1,2,3,4,5,6,7,8,9}
         client_class_nums = {class_val: 0 for class_val in label_class_set}
@@ -130,7 +136,24 @@ class Client:
     def get_client_datasize(self):
         return len(self.distributed_train_dataset[1])
 
-    def train(self, epoch):
+    # for fedprox
+    def fedprox_loss(self, outputs, labels, net_param, new_param):
+        loss = self.loss_function(outputs, labels)
+        if new_param is None:
+            return loss
+
+        mu = 0.01
+        reg = torch.tensor(0.)
+
+        for key in net_param.keys():
+            diff = net_param[key] - new_param[key]
+            diff = diff * diff
+            reg += torch.sqrt(torch.sum(diff).float())
+        loss += (0.5 * mu * reg)
+
+        return loss
+
+    def train(self, epoch, use_fedprox = True):
         """
         :param epoch: Current epoch #
         :type epoch: int
@@ -150,7 +173,11 @@ class Client:
 
             # forward + backward + optimize
             outputs = self.net(inputs)
-            loss = self.loss_function(outputs, labels)
+
+            if not use_fedprox:
+                loss = self.loss_function(outputs, labels)
+            else:
+                loss = self.fedprox_loss(outputs, labels, self.net.state_dict(), self.new_params)
             loss.backward()
             self.optimizer.step()
 
